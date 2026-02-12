@@ -2,7 +2,7 @@
 
 ## Our Commitment
 
-NyayaSankalan handles sensitive legal and personal information. We take security seriously and are committed to ensuring the safety of user data. This document outlines our security practices and how to report vulnerabilities.
+JusticeFlow handles sensitive legal and personal information. We take security seriously and are committed to ensuring the safety of user data. This document outlines our security practices and how to report vulnerabilities.
 
 ## Supported Versions
 
@@ -63,7 +63,7 @@ We provide security updates for the following versions:
 
 ## Reporting a Vulnerability
 
-We appreciate the security community's efforts in keeping NyayaSankalan secure. If you discover a security vulnerability, please follow these guidelines:
+We appreciate the security community's efforts in keeping JusticeFlow secure. If you discover a security vulnerability, please follow these guidelines:
 
 ### Where to Report
 
@@ -71,7 +71,7 @@ We appreciate the security community's efforts in keeping NyayaSankalan secure. 
 
 Instead, report security issues via:
 
-1. **Email**: security@nyayasankalan.example.com _(Configure your actual email)_
+1. **Email**: security@justiceflow.example.com _(Configure your actual email)_
 2. **Private Security Advisory**: Use GitHub's private vulnerability reporting feature
 
 ### What to Include
@@ -124,7 +124,7 @@ We classify vulnerabilities using these levels:
 
 ## Security Best Practices for Deployments
 
-If you're deploying NyayaSankalan, follow these practices:
+If you're deploying JusticeFlow, follow these practices:
 
 ### Environment Configuration
 
@@ -227,7 +227,7 @@ We recognize security researchers who help us:
 
 <!-- List will be updated as vulnerabilities are reported and fixed -->
 
-_No vulnerabilities reported yet. Be the first to help secure NyayaSankalan!_
+_No vulnerabilities reported yet. Be the first to help secure JusticeFlow!_
 
 ## Security Resources
 
@@ -239,7 +239,7 @@ _No vulnerabilities reported yet. Be the first to help secure NyayaSankalan!_
 ## Contact
 
 For security concerns:
-- **Email**: security@nyayasankalan.example.com
+- **Email**: security@justiceflow.example.com
 - **PGP Key**: _(Add your PGP public key for encrypted communication)_
 
 For general questions: See [CONTRIBUTING.md](CONTRIBUTING.md)
@@ -248,4 +248,4 @@ For general questions: See [CONTRIBUTING.md](CONTRIBUTING.md)
 
 **Last Updated**: December 31, 2025
 
-Thank you for helping keep NyayaSankalan and its users safe! 🔒
+Thank you for helping keep JusticeFlow and its users safe! 🔒

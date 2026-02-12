@@ -1,4 +1,4 @@
-# Architecture - NyayaSankalan
+# Architecture - JusticeFlow
 
 > Technical architecture covering backend, frontend, authentication, and storage strategies
 

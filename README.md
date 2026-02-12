@@ -1,8 +1,8 @@
 <p align="center">
-<img src="https://img.shields.io/badge/🏛️-NyayaSankalan-1a365d?style=for-the-badge&labelColor=1a365d" alt="NyayaSankalan" />
+<img src="https://img.shields.io/badge/⚖️-JusticeFlow-2563eb?style=for-the-badge&labelColor=2563eb" alt="JusticeFlow" />
 </p>
 
-<h1 align="center">NyayaSankalan - AI-Powered Case Management System</h1>
+<h1 align="center">JusticeFlow - AI-Powered Case Management System</h1>
 
 <p align="center">
 <strong>🚀 Revolutionizing Police-to-Court Case Handover with Artificial Intelligence</strong>
@@ -62,14 +62,14 @@
 
 ## 🎯 Overview
 
-**NyayaSankalan** (न्याय संकलन - "Justice Compilation") is a comprehensive, AI-powered Case Management System designed to digitize and streamline the entire lifecycle of criminal cases in the Indian judicial system — from FIR registration to final judgment.
+**JusticeFlow** is a comprehensive, AI-powered Case Management System designed to digitize and streamline the entire lifecycle of criminal cases in the Indian judicial system — from FIR registration to final judgment.
 
-### 🌟 Why NyayaSankalan?
+### 🌟 Why JusticeFlow?
 
 ```mermaid
 graph LR
     A[📋 Manual FIRs] -->|Before| B[❌ Paper-based chaos]
-    C[🏛️ NyayaSankalan] -->|After| D[✅ Digital efficiency]
+    C[⚖️ JusticeFlow] -->|After| D[✅ Digital efficiency]
     
     B --> E[Lost documents]
     B --> F[Delayed justice]
@@ -296,7 +296,7 @@ flowchart TB
         JG[⚖️ Judge]
     end
 
-    subgraph System["🏛️ NyayaSankalan CMS"]
+    subgraph System["⚖️ JusticeFlow CMS"]
         NS[Case Management<br/>+ AI Services]
     end
 
@@ -710,7 +710,7 @@ uvicorn main:app --host 0.0.0.0 --port 8001 --reload
 
 ```env
 # Database
-DATABASE_URL="postgresql://user:password@localhost:5432/nyayasankalan"
+DATABASE_URL="postgresql://user:password@localhost:5432/justiceflow"
 
 # JWT
 JWT_SECRET="your-super-secret-jwt-key"
@@ -1017,7 +1017,7 @@ uvicorn main:app --host 0.0.0.0 --port 8001
 ## 📂 Project Structure
 
 ```
-NyayaSankalan/
+JusticeFlow/
 ├── 📁 backend/                 # Node.js + Express API
 │   ├── prisma/                 # Database schema & migrations
 │   │   ├── schema.prisma
@@ -1153,8 +1153,8 @@ January 2026
 
 <br/>
 
-[🐛 Report Bug](https://github.com/yourusername/NyayaSankalan-CMS/issues) · 
-[💡 Request Feature](https://github.com/yourusername/NyayaSankalan-CMS/issues) · 
+[🐛 Report Bug](https://github.com/yourusername/JusticeFlow-CMS/issues) · 
+[💡 Request Feature](https://github.com/yourusername/JusticeFlow-CMS/issues) · 
 [📺 Watch Demo](https://youtu.be/QFKmyBJX93Y)
 
 </div>

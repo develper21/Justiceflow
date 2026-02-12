@@ -4,7 +4,7 @@
 
 Dear User,
 
-I'm excited to inform you that **all 4 AI enhancement features** have been successfully implemented in your NyayaSankalan project! 🚀
+I'm excited to inform you that **all 4 AI enhancement features** have been successfully implemented in your JusticeFlow project! 🚀
 
 ---
 

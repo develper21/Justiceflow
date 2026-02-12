@@ -1,4 +1,4 @@
-# System Flow - NyayaSankalan
+# System Flow - JusticeFlow
 
 > Complete step-by-step workflow from FIR registration to case closure
 
@@ -6,7 +6,7 @@
 
 ## Overview
 
-NyayaSankalan implements a **16-state case lifecycle** that mirrors the actual Criminal Procedure Code (CrPC) workflow in the Indian judicial system. Each state transition is controlled, logged, and role-restricted.
+JusticeFlow implements a **16-state case lifecycle** that mirrors the actual Criminal Procedure Code (CrPC) workflow in the Indian judicial system. Each state transition is controlled, logged, and role-restricted.
 
 ---
 

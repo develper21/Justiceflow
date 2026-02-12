@@ -1,5 +1,5 @@
 """
-🎯 NYAYASANKALAN - AI FEATURES WORKING DEMO
+🎯 JUSTICEFLOW - AI FEATURES WORKING DEMO
 Complete demonstration of all 6 AI enhancement features
 """
 import requests
@@ -18,7 +18,7 @@ def print_subheader(title):
     print("-"*75)
 
 # Main Demo
-print_header("🚀 NYAYASANKALAN AI FEATURES - LIVE DEMONSTRATION")
+print_header("🚀 JUSTICEFLOW AI FEATURES - LIVE DEMONSTRATION")
 print("\n📍 Testing AI Microservice at: http://localhost:8001")
 print("📚 Full API Documentation: http://localhost:8001/docs")
 

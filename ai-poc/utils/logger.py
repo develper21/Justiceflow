@@ -1,5 +1,5 @@
 """
-Structured logging utility for NyayaSankalan AI-POC
+Structured logging utility for JusticeFlow AI-POC
 Provides consistent logging across all modules with context and metadata
 """
 

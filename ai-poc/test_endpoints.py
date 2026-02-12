@@ -3,7 +3,7 @@ import io
 import json
 
 import importlib.util, sys
-spec=importlib.util.spec_from_file_location('main','d:\\Mohil\\-NyayaSankalan---CMS-main\\-NyayaSankalan---CMS\\ai-poc\\main.py')
+spec=importlib.util.spec_from_file_location('main','d:\\Mohil\\-JusticeFlow---CMS-main\\-JusticeFlow---CMS\\ai-poc\\main.py')
 main = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(main)
 

@@ -1,10 +1,10 @@
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                    NYAYASANKALAN AI FEATURES - SYSTEM STATUS                 ║
+║                    JUSTICEFLOW AI FEATURES - SYSTEM STATUS                 ║
 ║                          All Requirements Verified ✅                         ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 
 📅 Date: January 9, 2026
-🎯 Project: NyayaSankalan - Case Management System
+🎯 Project: JusticeFlow - Case Management System
 🏆 Hackathon: Hack The Winter (Second Wave) - Round 2
 
 
@@ -278,7 +278,7 @@ For Production Deployment:
 
 ═══════════════════════════════════════════════════════════════════════════════
 Generated: January 9, 2026
-Project: NyayaSankalan CMS - AI Enhancement
+Project: JusticeFlow CMS - AI Enhancement
 Hackathon: Hack The Winter (Second Wave)
 Team: [Your Team Name]
 ═══════════════════════════════════════════════════════════════════════════════

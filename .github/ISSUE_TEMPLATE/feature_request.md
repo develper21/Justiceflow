@@ -1,6 +1,6 @@
 ---
 name: Feature Request
-about: Suggest an idea for NyayaSankalan
+about: Suggest an idea for JusticeFlow
 title: '[FEATURE] '
 labels: enhancement
 assignees: ''

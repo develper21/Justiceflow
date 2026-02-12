@@ -1,5 +1,5 @@
 // ====================================================================
-// NYAYASANKALAN FRONTEND TYPES
+// JUSTICEFLOW FRONTEND TYPES
 // Matches backend Prisma schema and API responses exactly
 // ====================================================================
 

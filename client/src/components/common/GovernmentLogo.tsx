@@ -67,7 +67,7 @@ export const GovernmentEmblem: React.FC = () => {
       <GovernmentLogo className="w-12 h-12" />
       <div className="flex flex-col">
         <div className="text-lg font-bold text-[#1B4F72]" style={{ fontFamily: 'Georgia, serif' }}>
-          NyayaSankalan
+          JusticeFlow
         </div>
         <div className="text-xs text-gray-600 uppercase tracking-wide">
           Police-Court Case Management System

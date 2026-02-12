@@ -85,7 +85,7 @@ export const Login: React.FC = () => {
       {/* Header with emblem and title */}
       <header className="w-full max-w-md mx-auto flex flex-col items-center pt-8 pb-4">
         <GovernmentLogo className="w-14 h-14 mb-2" />
-        <h1 className="text-3xl font-serif font-bold text-navy-900 tracking-wide">NyayaSankalan</h1>
+        <h1 className="text-3xl font-serif font-bold text-navy-900 tracking-wide">JusticeFlow</h1>
         <p className="text-base text-gray-700 mt-1">Police-Court Case Management System</p>
       </header>
       {/* Info Box */}
@@ -211,7 +211,7 @@ export const Login: React.FC = () => {
       {/* Footer */}
       <footer className="mt-8 text-center text-xs text-gray-500 w-full pb-4">
         <div className="mb-1">© 2025 Government of India. All rights reserved.</div>
-        <div>Contact: support@nyayasankalan.gov.in</div>
+        <div>Contact: support@justiceflow.gov.in</div>
       </footer>
       {/* Minimal custom colors for navy */}
       <style>{`

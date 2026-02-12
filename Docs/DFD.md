@@ -1,4 +1,4 @@
-# Data Flow Diagram - NyayaSankalan
+# Data Flow Diagram - JusticeFlow
 
 > Level-0 and Level-1 Data Flow Diagrams (Textual Representation)
 
@@ -23,7 +23,7 @@ The Level-0 DFD shows the system as a single process with external entities (act
        ▼                                                    ▼
 ┌──────────────────────────────────────────────────────────────────┐
 │                                                                  │
-│                       NYAYASANKALAN                              │
+│                       JUSTICEFLOW                              │
 │                  Case Management System                          │
 │                                                                  │
 └──────────────────────────────────────────────────────────────────┘

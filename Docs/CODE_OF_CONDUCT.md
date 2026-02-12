@@ -2,7 +2,7 @@
 
 ## Our Pledge
 
-We as members, contributors, and maintainers of NyayaSankalan pledge to make participation in our project and community a harassment-free experience for everyone, regardless of age, body size, disability, ethnicity, gender identity and expression, level of experience, education, socio-economic status, nationality, personal appearance, race, religion, or sexual identity and orientation.
+We as members, contributors, and maintainers of JusticeFlow pledge to make participation in our project and community a harassment-free experience for everyone, regardless of age, body size, disability, ethnicity, gender identity and expression, level of experience, education, socio-economic status, nationality, personal appearance, race, religion, or sexual identity and orientation.
 
 We are committed to providing a welcoming, inclusive, and professional environment where diverse perspectives are valued and respected.
 
@@ -36,7 +36,7 @@ Examples of unacceptable behavior:
 
 ## Project-Specific Guidelines
 
-Given that NyayaSankalan deals with legal and justice system matters:
+Given that JusticeFlow deals with legal and justice system matters:
 
 ### Sensitivity & Confidentiality
 
@@ -86,7 +86,7 @@ All contributors are responsible for:
 
 If you experience or witness unacceptable behavior, please report it:
 
-1. **Email**: conduct@nyayasankalan.example.com
+1. **Email**: conduct@justiceflow.example.com
 2. **Private Message**: Contact project maintainers directly on GitHub
 3. **Anonymous Report**: Use [form link if available]
 
@@ -177,7 +177,7 @@ We recognize that this Code of Conduct is a living document. We welcome:
 
 ## Acknowledgments
 
-Thank you for helping make NyayaSankalan a welcoming, inclusive, and professional community. Together, we're building technology that can positively impact the justice delivery system.
+Thank you for helping make JusticeFlow a welcoming, inclusive, and professional community. Together, we're building technology that can positively impact the justice delivery system.
 
 ---
 

@@ -1,8 +1,9 @@
 {
-  "name": "client",
+  "name": "justiceflow-ui",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
+  "description": "JusticeFlow Frontend - Modern React UI for AI-Powered Case Management",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",

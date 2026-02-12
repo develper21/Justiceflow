@@ -2,7 +2,7 @@
 
 ## 🎯 What We Implemented
 
-Successfully implemented **4 major AI enhancement features** for NyayaSankalan CMS:
+Successfully implemented **4 major AI enhancement features** for JusticeFlow CMS:
 
 ### 1. ✅ Legal Domain NER (Named Entity Recognition)
 Enhanced entity extraction specifically designed for Indian legal documents.

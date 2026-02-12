@@ -1,4 +1,4 @@
-# Security & Access Control - NyayaSankalan
+# Security & Access Control - JusticeFlow
 
 > Role-based access control matrix with justifications for restricted actions
 
@@ -6,7 +6,7 @@
 
 ## Overview
 
-NyayaSankalan implements a **Role-Based Access Control (RBAC)** model with four distinct user roles mapped to the Indian criminal justice system hierarchy.
+JusticeFlow implements a **Role-Based Access Control (RBAC)** model with four distinct user roles mapped to the Indian criminal justice system hierarchy.
 
 ---
 

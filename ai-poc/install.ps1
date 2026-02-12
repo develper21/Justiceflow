@@ -2,7 +2,7 @@
 # Run this script to install all dependencies
 
 Write-Host "========================================" -ForegroundColor Cyan
-Write-Host "NyayaSankalan AI Enhancement Setup" -ForegroundColor Cyan
+Write-Host "JusticeFlow AI Enhancement Setup" -ForegroundColor Cyan
 Write-Host "========================================" -ForegroundColor Cyan
 Write-Host ""
 
