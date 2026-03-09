@@ -1,10 +1,18 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import apiClient from '../../api/axios';
 import SearchResults from './SearchResults';
 
+type Hit = {
+  id: string;
+  caseId?: string;
+  sourceFile?: string;
+  snippet?: string;
+  score?: number;
+};
+
 export default function GenerateDraftButton() {
   const [query, setQuery] = useState('');
-  const [hits, setHits] = useState<any[]>([]);
+  const [hits, setHits] = useState<Hit[]>([]);
   const [loading, setLoading] = useState(false);
 
   const runSearch = async () => {
@@ -12,7 +20,7 @@ export default function GenerateDraftButton() {
     try {
       const res = await apiClient.get('/ai/search', { params: { q: query, k: 5 } });
       setHits(res.data.data || []);
-    } catch (err) {
+    } catch {
       // errors handled globally by interceptor
     } finally {
       setLoading(false);
@@ -25,7 +33,8 @@ export default function GenerateDraftButton() {
       await apiClient.post('/ai/index');
       // optionally re-run search
       if (query) await runSearch();
-    } catch (err) {
+    } catch {
+      // ignore error
     } finally {
       setLoading(false);
     }
