@@ -1,4 +1,3 @@
-import React from 'react';
 import GenerateDraftButton from '../../components/ai/GenerateDraftButton';
 
 export default function AIDemoPage() {
