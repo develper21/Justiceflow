@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Header } from '../../components/layout/Header';
 import { Card } from '../../components/ui/Card';
 import { Badge } from '../../components/ui/Badge';
-import { Loader } from '../../components/common/Loader';
 import { StatCardSkeleton, CardSkeleton } from '../../components/common/SkeletonLoader';
 import { ErrorMessage } from '../../components/common/ErrorMessage';
 import { EmptyState } from '../../components/common/EmptyState';
@@ -41,7 +40,7 @@ export const SHODashboard: React.FC = () => {
   if (isLoading) {
     return (
       <>
-        <Header />
+        <Header title="SHO Dashboard" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="mb-8">
             <h1 className="text-3xl font-bold text-gray-900">SHO Dashboard</h1>
