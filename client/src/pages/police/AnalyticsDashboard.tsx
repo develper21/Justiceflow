@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
-    BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
+    BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
     PieChart, Pie, Cell, LineChart, Line
 } from 'recharts';
 import { Header } from '../../components/layout/Header';
@@ -10,8 +10,16 @@ import apiClient from '../../api/axios';
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8', '#82ca9d'];
 
+interface DashboardData {
+    totalCases: number;
+    activeCases: number;
+    closedCases: number;
+    statusDistribution: Array<{ name: string; value: number }>;
+    monthlyTrends: Array<{ name: string; cases: number }>;
+}
+
 export const AnalyticsDashboard: React.FC = () => {
-    const [data, setData] = useState<any>(null);
+    const [data, setData] = useState<DashboardData | null>(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -72,9 +80,9 @@ export const AnalyticsDashboard: React.FC = () => {
                                     outerRadius={100}
                                     fill="#8884d8"
                                     dataKey="value"
-                                    label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                                    label={({ name, percent }) => `${name} ${((percent || 0) * 100).toFixed(0)}%`}
                                 >
-                                    {data.statusDistribution.map((entry: any, index: number) => (
+                                    {data.statusDistribution.map((_entry: { name: string; value: number }, index: number) => (
                                         <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                                     ))}
                                 </Pie>
