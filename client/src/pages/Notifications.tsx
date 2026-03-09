@@ -1,28 +1,27 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Header } from '../components/layout/Header';
 import { Card } from '../components/ui/Card';
 import { useNotifications } from '../context/NotificationContext';
 import { Button } from '../components/ui/Button';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { Loader } from '../components/common/Loader';
 
 export const Notifications: React.FC = () => {
   const { notifications, unreadCount, markAsRead, markAllRead, refresh } = useNotifications();
   const { user } = useAuth();
   const [filter, setFilter] = useState<'ALL' | 'UNREAD'>('ALL');
-  const [isRefreshing, setIsRefreshing] = useState(false);
-  const nav = useNavigate();
-
-  useEffect(() => {
-    handleRefresh();
-  }, []);
-
+  const [isRefreshing, setIsRefreshing] = useState(true);
   const handleRefresh = async () => {
     setIsRefreshing(true);
     await refresh();
     setIsRefreshing(false);
   };
+  
+  const nav = useNavigate();
+
+  useEffect(() => {
+    refresh().finally(() => setIsRefreshing(false));
+  }, [refresh]);
 
   const getRoleBasePath = () => {
     switch (user?.role) {
@@ -38,7 +37,7 @@ export const Notifications: React.FC = () => {
     }
   };
 
-  const handleNotificationClick = (n: any) => {
+  const handleNotificationClick = (n: { id: string; relatedCaseId: string }) => {
     markAsRead(n.id);
     const basePath = getRoleBasePath();
     nav(`${basePath}/cases/${n.relatedCaseId}`);
