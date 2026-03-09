@@ -1,10 +1,9 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Header } from '../../components/layout/Header';
 import { Card } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
 import { Badge } from '../../components/ui/Badge';
-import { Loader } from '../../components/common/Loader';
 import { TableSkeleton } from '../../components/common/SkeletonLoader';
 import { ErrorMessage } from '../../components/common/ErrorMessage';
 import { EmptyState } from '../../components/common/EmptyState';
@@ -37,8 +36,10 @@ export const SHOAllCases: React.FC = () => {
       setError(null);
       const data = await caseApi.getAllCases();
       setCases(data);
-    } catch (err: any) {
-      setError(err.response?.data?.message || err.message || 'Failed to load cases');
+    } catch (err: unknown) {
+      type ErrorResponse = { response?: { data?: { message?: string } }; message?: string };
+      const error = err as ErrorResponse;
+      setError(error.response?.data?.message || error.message || 'Failed to load cases');
     } finally {
       setIsLoading(false);
     }
@@ -114,7 +115,7 @@ export const SHOAllCases: React.FC = () => {
   if (isLoading) {
     return (
       <>
-        <Header />
+        <Header title="All Cases" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-8">All Cases</h1>
           <TableSkeleton rows={8} columns={6} />
