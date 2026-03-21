@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { asyncHandler } from '../../utils/asyncHandler';
 import { AIEnhancedService } from '../../services/ai-enhanced.service';
+import { toString } from '../../utils/params.helper';
 
 const service = new AIEnhancedService();
 
@@ -118,7 +119,7 @@ export const enhancedTemplates = asyncHandler(async (_req: Request, res: Respons
 
 export const enhancedSectionDetails = asyncHandler(async (req: Request, res: Response) => {
   try {
-    const id = req.params.id;
+    const id = toString(req.params.id);
     const codeType: string = (req.query?.code_type as string) || 'ipc';
     const result = await service.sectionDetails(id, codeType);
     res.status(200).json({ success: true, data: result.data || result });
@@ -129,8 +130,8 @@ export const enhancedSectionDetails = asyncHandler(async (req: Request, res: Res
 
 export const enhancedPrecedentsBySection = asyncHandler(async (req: Request, res: Response) => {
   try {
-    const section = req.params.section;
-    const topK: number = parseInt(String(req.query?.top_k ?? 10), 10);
+    const section = toString(req.params.section);
+    const topK: number = parseInt(String(req.query?.top_k ?? 5), 10);
     const result = await service.precedentsBySection(section, topK);
     res.status(200).json({ success: true, data: result.data || result });
   } catch (error: any) {
