@@ -107,7 +107,7 @@ export const SectionSuggester: React.FC<Props> = ({ incident, onApplySection }) 
 
               {/* IPC ↔ BNS Comparison Box */}
               {s.equivalent && (
-                <div className="mb-2 p-2 bg-gradient-to-r from-purple-50 to-blue-50 border border-purple-200 rounded">
+                <div className="mb-2 p-2 bg-linear-to-r from-purple-50 to-blue-50 border border-purple-200 rounded">
                   <p className="text-xs font-semibold text-purple-700 mb-1">
                     {s.code_type === 'IPC' ? '🔄 New BNS Equivalent:' : '🔄 Old IPC Equivalent:'}
                   </p>
