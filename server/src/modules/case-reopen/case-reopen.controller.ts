@@ -3,13 +3,14 @@ import { body, param } from 'express-validator';
 import { asyncHandler } from '../../utils/asyncHandler';
 import caseReopenService from './case-reopen.service';
 import { validate } from '../../middleware/validation.middleware';
+import { toString } from '../../utils/params.helper';
 
 export const requestReopen = asyncHandler(async (req: Request, res: Response) => {
   const { caseId } = req.params;
   const { policeReason } = req.body;
   const userId = (req as any).user.id;
 
-  const result = await caseReopenService.createRequestWithReason(caseId, userId, policeReason);
+  const result = await caseReopenService.createRequestWithReason(toString(caseId), userId, policeReason);
   res.status(201).json({ success: true, data: result });
 });
 
@@ -31,7 +32,7 @@ export const approveRequest = asyncHandler(async (req: Request, res: Response) =
   const userId = (req as any).user.id;
   const organizationId = (req as any).user.organizationId;
 
-  const result = await caseReopenService.approve(id, userId, judgeNote, organizationId);
+  const result = await caseReopenService.approve(toString(id), userId, judgeNote, organizationId);
   res.status(200).json({ success: true, data: result });
 });
 
@@ -41,7 +42,7 @@ export const rejectRequest = asyncHandler(async (req: Request, res: Response) =>
   const userId = (req as any).user.id;
   const organizationId = (req as any).user.organizationId;
 
-  const result = await caseReopenService.reject(id, userId, reason, organizationId);
+  const result = await caseReopenService.reject(toString(id), userId, reason, organizationId);
   res.status(200).json({ success: true, data: result });
 });
 
