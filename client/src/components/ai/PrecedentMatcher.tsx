@@ -105,7 +105,7 @@ export const PrecedentMatcher: React.FC<Props> = ({ caseDescription, sections })
 
         {/* Results */}
         {precedents.length > 0 && (
-          <div className="space-y-3 max-h-[600px] overflow-y-auto">
+          <div className="space-y-3 max-h-150 overflow-y-auto">
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
               <p className="text-sm text-blue-800 font-semibold">
                 ✓ Found {precedents.length} similar case{precedents.length !== 1 ? 's' : ''}
