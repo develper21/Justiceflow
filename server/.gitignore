@@ -1,5 +1,6 @@
 # Environment variables (SENSITIVE - contains DB credentials, JWT secrets)
 .env
+.env.production
 .env.local
 .env.*.local
 
