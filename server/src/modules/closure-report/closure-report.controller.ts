@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { ClosureReportService } from '../../services/closureReport.service';
 import { asyncHandler } from '../../utils/asyncHandler';
+import { toString } from '../../utils/params.helper';
 
 const closureReportService = new ClosureReportService();
 
@@ -12,7 +13,7 @@ export const generateClosureReport = asyncHandler(async (req: Request, res: Resp
   const { caseId } = req.params;
   const userId = req.user!.id;
 
-  const reportUrl = await closureReportService.generateClosureReport(caseId, userId);
+  const reportUrl = await closureReportService.generateClosureReport(toString(caseId), userId);
 
   res.status(200).json({
     success: true,
@@ -28,7 +29,7 @@ export const generateClosureReport = asyncHandler(async (req: Request, res: Resp
 export const getClosureReport = asyncHandler(async (req: Request, res: Response) => {
   const { caseId } = req.params;
 
-  const reportUrl = await closureReportService.getClosureReport(caseId);
+  const reportUrl = await closureReportService.getClosureReport(toString(caseId));
 
   res.status(200).json({
     success: true,
