@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { AIService } from './ai.service';
 import { asyncHandler } from '../../utils/asyncHandler';
+import { toString } from '../../utils/params.helper';
 
 const aiService = new AIService();
 
@@ -9,8 +10,13 @@ export const rebuildIndex = asyncHandler(async (req: Request, res: Response) => 
   res.status(200).json({ success: true, data: result });
 });
 
+export const syncIndexFromDatabase = asyncHandler(async (req: Request, res: Response) => {
+  const result = await aiService.indexAll();
+  res.status(200).json({ success: true, data: result });
+});
+
 export const indexDocument = asyncHandler(async (req: Request, res: Response) => {
-  const extractionId = req.params.id;
+  const extractionId = toString(req.params.id);
   if (!extractionId) return res.status(400).json({ success: false, error: 'extraction id required' });
   const result = await aiService.indexDocument(extractionId);
   res.status(200).json({ success: true, data: result });
