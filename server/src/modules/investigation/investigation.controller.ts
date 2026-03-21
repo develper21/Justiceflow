@@ -16,6 +16,7 @@ const investigationService = new InvestigationService();
  */
 export const createInvestigationEvent = asyncHandler(async (req: Request, res: Response) => {
   const { caseId } = req.params;
+  const caseIdString = Array.isArray(caseId) ? caseId[0] : caseId;
 
   if (!req.user) {
     throw ApiError.unauthorized('Authentication required');
@@ -29,7 +30,7 @@ export const createInvestigationEvent = asyncHandler(async (req: Request, res: R
   }
 
   const event = await investigationService.createInvestigationEvent(
-    caseId,
+    caseIdString,
     req.body,
     userId,
     organizationId
@@ -46,6 +47,7 @@ export const createInvestigationEvent = asyncHandler(async (req: Request, res: R
  */
 export const getInvestigationEvents = asyncHandler(async (req: Request, res: Response) => {
   const { caseId } = req.params;
+  const caseIdString = Array.isArray(caseId) ? caseId[0] : caseId;
 
   if (!req.user) {
     throw ApiError.unauthorized('Authentication required');
@@ -57,7 +59,7 @@ export const getInvestigationEvents = asyncHandler(async (req: Request, res: Res
     throw ApiError.badRequest('User must be associated with a police station');
   }
 
-  const events = await investigationService.getInvestigationEvents(caseId, organizationId);
+  const events = await investigationService.getInvestigationEvents(caseIdString, organizationId);
 
   res.status(200).json({
     success: true,
@@ -71,6 +73,7 @@ export const getInvestigationEvents = asyncHandler(async (req: Request, res: Res
  */
 export const createEvidence = asyncHandler(async (req: Request, res: Response) => {
   const { caseId } = req.params;
+  const caseIdString = Array.isArray(caseId) ? caseId[0] : caseId;
   const userId = req.user!.id;
   const userRole = req.user!.role;
   const organizationId = req.user!.organizationId;
@@ -80,7 +83,7 @@ export const createEvidence = asyncHandler(async (req: Request, res: Response) =
   }
 
   // Validate police can upload (blocked after court submission)
-  await validatePoliceCanUpload(caseId, userRole);
+  await validatePoliceCanUpload(caseIdString, userRole);
 
   let fileUrl: string = req.body.fileUrl || '';
 
@@ -92,7 +95,7 @@ export const createEvidence = asyncHandler(async (req: Request, res: Response) =
     fileUrl = uploadResult.secure_url;
 
     // Log file upload
-    await logFileUpload(userId, 'EVIDENCE', caseId, req.file.originalname);
+    await logFileUpload(userId, 'EVIDENCE', caseIdString, req.file.originalname);
   }
 
   if (!fileUrl) {
@@ -106,7 +109,7 @@ export const createEvidence = asyncHandler(async (req: Request, res: Response) =
     mimeType: req.file?.mimetype,
   };
 
-  const evidence = await investigationService.createEvidence(caseId, evidenceData, userId, organizationId);
+  const evidence = await investigationService.createEvidence(caseIdString, evidenceData, userId, organizationId);
 
   res.status(201).json({
     success: true,
@@ -119,13 +122,14 @@ export const createEvidence = asyncHandler(async (req: Request, res: Response) =
  */
 export const getEvidence = asyncHandler(async (req: Request, res: Response) => {
   const { caseId } = req.params;
+  const caseIdString = Array.isArray(caseId) ? caseId[0] : caseId;
   const organizationId = req.user!.organizationId;
 
   if (!organizationId) {
     throw ApiError.badRequest('User must be associated with a police station');
   }
 
-  const evidence = await investigationService.getEvidence(caseId, organizationId);
+  const evidence = await investigationService.getEvidence(caseIdString, organizationId);
 
   res.status(200).json({
     success: true,
@@ -139,6 +143,7 @@ export const getEvidence = asyncHandler(async (req: Request, res: Response) => {
  */
 export const createWitness = asyncHandler(async (req: Request, res: Response) => {
   const { caseId } = req.params;
+  const caseIdString = Array.isArray(caseId) ? caseId[0] : caseId;
   const userId = req.user!.id;
   const userRole = req.user!.role;
   const organizationId = req.user!.organizationId;
@@ -148,7 +153,7 @@ export const createWitness = asyncHandler(async (req: Request, res: Response) =>
   }
 
   // Validate police can upload (blocked after court submission)
-  await validatePoliceCanUpload(caseId, userRole);
+  await validatePoliceCanUpload(caseIdString, userRole);
 
   let statementFileUrl: string = req.body.statementFileUrl || '';
 
@@ -160,7 +165,7 @@ export const createWitness = asyncHandler(async (req: Request, res: Response) =>
     statementFileUrl = uploadResult.secure_url;
 
     // Log file upload
-    await logFileUpload(userId, 'WITNESS_STATEMENT', caseId, req.file.originalname);
+    await logFileUpload(userId, 'WITNESS_STATEMENT', caseIdString, req.file.originalname);
   }
 
   // If no file uploaded and no URL, use statement text or default
@@ -175,7 +180,7 @@ export const createWitness = asyncHandler(async (req: Request, res: Response) =>
     statementFileUrl,
   };
 
-  const witness = await investigationService.createWitness(caseId, witnessData, userId, organizationId);
+  const witness = await investigationService.createWitness(caseIdString, witnessData, userId, organizationId);
 
   res.status(201).json({
     success: true,
@@ -188,13 +193,14 @@ export const createWitness = asyncHandler(async (req: Request, res: Response) =>
  */
 export const getWitnesses = asyncHandler(async (req: Request, res: Response) => {
   const { caseId } = req.params;
+  const caseIdString = Array.isArray(caseId) ? caseId[0] : caseId;
   const organizationId = req.user!.organizationId;
 
   if (!organizationId) {
     throw ApiError.badRequest('User must be associated with a police station');
   }
 
-  const witnesses = await investigationService.getWitnesses(caseId, organizationId);
+  const witnesses = await investigationService.getWitnesses(caseIdString, organizationId);
 
   res.status(200).json({
     success: true,
@@ -207,6 +213,7 @@ export const getWitnesses = asyncHandler(async (req: Request, res: Response) => 
  */
 export const createAccused = asyncHandler(async (req: Request, res: Response) => {
   const { caseId } = req.params;
+  const caseIdString = Array.isArray(caseId) ? caseId[0] : caseId;
   const userId = req.user!.id;
   const organizationId = req.user!.organizationId;
 
@@ -214,7 +221,7 @@ export const createAccused = asyncHandler(async (req: Request, res: Response) =>
     throw ApiError.badRequest('User must be associated with a police station');
   }
 
-  const accused = await investigationService.createAccused(caseId, req.body, userId, organizationId);
+  const accused = await investigationService.createAccused(caseIdString, req.body, userId, organizationId);
 
   res.status(201).json({
     success: true,
@@ -227,13 +234,14 @@ export const createAccused = asyncHandler(async (req: Request, res: Response) =>
  */
 export const getAccused = asyncHandler(async (req: Request, res: Response) => {
   const { caseId } = req.params;
+  const caseIdString = Array.isArray(caseId) ? caseId[0] : caseId;
   const organizationId = req.user!.organizationId;
 
   if (!organizationId) {
     throw ApiError.badRequest('User must be associated with a police station');
   }
 
-  const accused = await investigationService.getAccused(caseId, organizationId);
+  const accused = await investigationService.getAccused(caseIdString, organizationId);
 
   res.status(200).json({
     success: true,
