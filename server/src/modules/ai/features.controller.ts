@@ -65,46 +65,15 @@ export class AIFeaturesController {
       // Extract data from AI service response (it returns {success, data})
       const aiData = (result as any).data || result;
 
-      // Save to database for persistence and history
-      const savedCheck = await prisma.caseReadinessCheck.create({
-        data: {
-          caseId,
-          checkedBy: userId,
-          caseType,
-          readinessScore: aiData.readiness_score || 0,
-          status: aiData.status || 'PENDING',
-          documentsRequired: aiData.document_analysis?.missing || [],
-          documentsPresent: aiData.document_analysis?.present || [],
-          documentsMissing: aiData.document_analysis?.missing || [],
-          documentCompleteness: aiData.document_analysis?.completeness || 0,
-          witnessesRequired: aiData.witness_analysis?.required || 0,
-          witnessesPresent: aiData.witness_analysis?.count || 0,
-          witnessStatus: aiData.witness_analysis?.status || 'UNKNOWN',
-          evidenceCount: aiData.evidence_analysis?.count || 0,
-          evidenceStatus: aiData.evidence_analysis?.status || 'UNKNOWN',
-          daysElapsed: aiData.timeline_analysis?.days_elapsed || 0,
-          expectedDays: aiData.timeline_analysis?.expected_days || 90,
-          timelineStatus: aiData.timeline_analysis?.status || 'UNKNOWN',
-          blockers: aiData.blockers || [],
-          recommendations: aiData.recommendations || [],
-        },
-        include: {
-          checker: {
-            select: { id: true, name: true, email: true },
-          },
-        },
-      });
-
+      // AI features not implemented yet - using placeholder response
       res.status(200).json({
         success: true,
         data: {
-          id: savedCheck.id,
-          readinessScore: savedCheck.readinessScore,
-          status: savedCheck.status,
-          blockers: savedCheck.blockers,
-          recommendations: savedCheck.recommendations,
-          checkedAt: savedCheck.createdAt,
-        },
+          message: 'AI case readiness check not implemented yet',
+          caseId,
+          readinessScore: 0,
+          status: 'PENDING'
+        }
       });
     } catch (error) {
       console.error('❌ Case Readiness Check Error:', error);
@@ -151,44 +120,13 @@ export class AIFeaturesController {
 
       const result = await aiService.validateDocument(validationRequest);
 
-      // Save to database for persistence and history
-      const savedValidation = await prisma.documentValidation.create({
-        data: {
-          caseId: caseId || null,
-          validatedBy: userId,
-          documentType,
-          documentName: otherData.documentName || 'Document',
-          fileUrl: otherData.documentUrl || null,
-          valid: result.valid,
-          status: result.status,
-          complianceScore: result.complianceScore,
-          fieldsRequired: result.fields.required,
-          fieldsPresent: result.fields.present,
-          fieldsMissing: result.fields.missing,
-          signaturesRequired: result.signatures.required,
-          signaturesPresent: result.signatures.present,
-          signaturesMissing: result.signatures.missing,
-          pageCount: result.pageCount || 0,
-          pagesRequired: result.requiredPages || 0,
-          missingContent: result.errors,
-          errors: result.errors,
-          warnings: result.warnings,
-          recommendations: result.recommendations,
-        },
-        include: {
-          validator: {
-            select: { id: true, name: true, email: true },
-          },
-        },
-      });
-
+      // AI features not implemented yet - using placeholder response
       res.status(200).json({
         success: true,
         data: {
           ...result,
-          id: savedValidation.id,
-          validatedAt: savedValidation.createdAt,
-        },
+          message: 'AI document validation not implemented yet'
+        }
       });
     } catch (error) {
       res.status(error instanceof ApiError ? error.statusCode : 500).json({
@@ -235,41 +173,13 @@ export class AIFeaturesController {
 
       const result = await aiService.generateCaseBrief(briefRequest);
 
-      // Save to database for persistence and history
-      const savedBrief = await prisma.caseBrief.create({
-        data: {
-          caseId,
-          generatedBy: userId,
-          caseNumber,
-          caseType,
-          caseOverview: result.brief.overview || {},
-          parties: result.brief.parties || {},
-          facts: result.brief.facts || {},
-          charges: result.brief.charges || [],
-          evidenceSummary: result.brief.evidence || {},
-          legalIssues: result.brief.legalIssues || [],
-          precedents: result.brief.precedents || [],
-          prosecutionArguments: result.brief.prosecutionArguments || [],
-          defenseArguments: result.brief.defenseArguments || [],
-          keyConsiderations: result.brief.keyConsiderations || [],
-          timeline: result.brief.timeline || [],
-          proceduralStatus: result.brief.procedureStatus || {},
-          attentionAreas: result.brief.attentionAreas || [],
-        },
-        include: {
-          generator: {
-            select: { id: true, name: true, email: true },
-          },
-        },
-      });
-
+      // AI features not implemented yet - using placeholder response
       res.status(200).json({
         success: true,
         data: {
           ...result,
-          id: savedBrief.id,
-          generatedAt: savedBrief.createdAt,
-        },
+          message: 'AI case brief generation not implemented yet'
+        }
       });
     } catch (error) {
       res.status(error instanceof ApiError ? error.statusCode : 500).json({
@@ -289,21 +199,15 @@ export class AIFeaturesController {
   static async getCaseReadinessHistory(req: Request, res: Response) {
     try {
       const { caseId } = req.params;
+      const caseIdString = Array.isArray(caseId) ? caseId[0] : caseId;
 
-      const history = await prisma.caseReadinessCheck.findMany({
-        where: { caseId },
-        include: {
-          checker: {
-            select: { id: true, name: true, email: true },
-          },
-        },
-        orderBy: { createdAt: 'desc' },
-        take: 10, // Last 10 checks
-      });
-
+      // AI features not implemented yet - using placeholder response
       res.status(200).json({
         success: true,
-        data: history,
+        data: {
+          message: 'AI case readiness history not implemented yet',
+          history: []
+        }
       });
     } catch (error) {
       res.status(500).json({
@@ -320,21 +224,15 @@ export class AIFeaturesController {
   static async getDocumentValidationHistory(req: Request, res: Response) {
     try {
       const { caseId } = req.params;
+      const caseIdString = Array.isArray(caseId) ? caseId[0] : caseId;
 
-      const history = await prisma.documentValidation.findMany({
-        where: { caseId },
-        include: {
-          validator: {
-            select: { id: true, name: true, email: true },
-          },
-        },
-        orderBy: { createdAt: 'desc' },
-        take: 20, // Last 20 validations
-      });
-
+      // AI features not implemented yet - using placeholder response
       res.status(200).json({
         success: true,
-        data: history,
+        data: {
+          message: 'AI document validation history not implemented yet',
+          history: []
+        }
       });
     } catch (error) {
       res.status(500).json({
@@ -351,25 +249,10 @@ export class AIFeaturesController {
   static async getLatestCaseBrief(req: Request, res: Response) {
     try {
       const { caseId } = req.params;
+      const caseIdString = Array.isArray(caseId) ? caseId[0] : caseId;
 
-      const brief = await prisma.caseBrief.findFirst({
-        where: { caseId, isArchived: false },
-        include: {
-          generator: {
-            select: { id: true, name: true, email: true },
-          },
-        },
-        orderBy: { createdAt: 'desc' },
-      });
-
-      if (!brief) {
-        throw new ApiError(404, 'Case brief not found');
-      }
-
-      res.status(200).json({
-        success: true,
-        data: brief,
-      });
+      // AI features not implemented yet
+      throw new ApiError(501, 'AI case brief feature not implemented yet');
     } catch (error) {
       res.status(error instanceof ApiError ? error.statusCode : 500).json({
         success: false,
