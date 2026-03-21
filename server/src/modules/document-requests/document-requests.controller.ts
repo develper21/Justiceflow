@@ -26,19 +26,21 @@ export const getPendingForSho = async (req: Request, res: Response) => {
 
 export const shoApprove = async (req: Request, res: Response) => {
   const id = req.params.id;
+  const idString = Array.isArray(id) ? id[0] : id;
   const shoUserId = req.user!.id;
   const organizationId = req.user!.organizationId;
-  const result = await documentRequestService.shoApprove(id, shoUserId, organizationId);
+  const result = await documentRequestService.shoApprove(idString, shoUserId, organizationId);
   res.status(200).json({ success: true, data: result });
 };
 
 export const rejectRequest = async (req: Request, res: Response) => {
   const id = req.params.id;
+  const idString = Array.isArray(id) ? id[0] : id;
   const { reason } = req.body;
   const userId = req.user!.id;
   const role = req.user!.role;
   const organizationId = req.user!.organizationId;
-  const result = await documentRequestService.reject(id, userId, role, reason, organizationId);
+  const result = await documentRequestService.reject(idString, userId, role, reason, organizationId);
   res.status(200).json({ success: true, data: result });
 };
 
@@ -49,16 +51,18 @@ export const getApprovedForCourt = async (req: Request, res: Response) => {
 
 export const getByCase = async (req: Request, res: Response) => {
   const caseId = req.params.caseId;
+  const caseIdString = Array.isArray(caseId) ? caseId[0] : caseId;
   const userId = req.user!.id;
   const organizationId = req.user!.organizationId;
   const role = req.user!.role;
 
-  const result = await documentRequestService.getRequestsByCase(caseId, userId, organizationId, role);
+  const result = await documentRequestService.getRequestsByCase(caseIdString, userId, organizationId, role);
   res.status(200).json({ success: true, data: result });
 };
 
 export const issueRequest = async (req: Request, res: Response) => {
   const id = req.params.id;
+  const idString = Array.isArray(id) ? id[0] : id;
 
   if (!req.file) {
     throw ApiError.badRequest('File is required');
@@ -68,7 +72,7 @@ export const issueRequest = async (req: Request, res: Response) => {
   const userId = req.user!.id;
   const { remarks } = req.body;
 
-  const result = await documentRequestService.issue(id, file, userId, remarks);
+  const result = await documentRequestService.issue(idString, file, userId, remarks);
   res.status(200).json({ success: true, data: result });
 };
 
