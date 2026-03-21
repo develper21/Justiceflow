@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: justiceflow-ai
+    runtime: python
+    plan: free
+    repo: https://github.com/develper21/Justiceflow
+    rootDir: ai-poc
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "uvicorn main:app --host 0.0.0.0 --port $PORT"
+    autoDeploy: true
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.9"
+      - key: PORT
+        value: 10000
