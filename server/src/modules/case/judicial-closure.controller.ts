@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { JudicialClosureService } from './judicial-closure.service';
 import { asyncHandler } from '../../utils/asyncHandler';
+import { toString } from '../../utils/params.helper';
 
 const judicialClosureService = new JudicialClosureService();
 
@@ -13,7 +14,7 @@ export const judicialCloseCase = asyncHandler(async (req: Request, res: Response
   const userId = req.user!.id;
   const courtId = req.user!.organizationId;
 
-  const result = await judicialClosureService.closeCase(caseId, userId, courtId!);
+  const result = await judicialClosureService.closeCase(toString(caseId), userId, courtId!);
 
   res.status(200).json({
     success: true,
@@ -34,7 +35,7 @@ export const canCloseCase = asyncHandler(async (req: Request, res: Response) => 
   const { caseId } = req.params;
   const courtId = req.user!.organizationId;
 
-  const result = await judicialClosureService.canCloseCase(caseId, courtId!);
+  const result = await judicialClosureService.canCloseCase(toString(caseId), courtId!);
 
   res.status(200).json({
     success: true,
