@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { CaseService } from './case.service';
 import { asyncHandler } from '../../utils/asyncHandler';
 import { ApiError } from '../../utils/ApiError';
+import { toString } from '../../utils/params.helper';
 
 const caseService = new CaseService();
 
@@ -60,7 +61,7 @@ export const getCaseById = asyncHandler(async (req: Request, res: Response) => {
   const userRole = req.user!.role;
   const organizationId = req.user!.organizationId;
 
-  const caseRecord = await caseService.getCaseById(caseId, userRole, organizationId);
+  const caseRecord = await caseService.getCaseById(toString(caseId), userRole, organizationId);
 
   res.status(200).json({
     success: true,
@@ -89,7 +90,7 @@ export const assignCase = asyncHandler(async (req: Request, res: Response) => {
   }
 
   const updatedCase = await caseService.assignCase(
-    caseId,
+    toString(caseId),
     officerId,
     assignmentReason || 'Assigned by SHO',
     userId,
@@ -115,7 +116,7 @@ export const completeInvestigation = asyncHandler(async (req: Request, res: Resp
     throw ApiError.badRequest('User must be associated with a police station');
   }
 
-  const result = await caseService.completeInvestigation(caseId, userId, organizationId);
+  const result = await caseService.completeInvestigation(toString(caseId), userId, organizationId);
 
   res.status(200).json({
     success: true,
