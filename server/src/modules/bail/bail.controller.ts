@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { BailService } from './bail.service';
 import { asyncHandler } from '../../utils/asyncHandler';
+import { toString } from '../../utils/params.helper';
 
 const bailService = new BailService();
 
@@ -13,7 +14,7 @@ export const createBailApplication = asyncHandler(async (req: Request, res: Resp
   const organizationId = req.user!.organizationId;
   const userRole = req.user!.role;
 
-  const bailApp = await bailService.createBailRecord(caseId, req.body, userId, organizationId, userRole);
+  const bailApp = await bailService.createBailRecord(toString(caseId), req.body, userId, organizationId, userRole);
 
   res.status(201).json({
     success: true,
@@ -29,7 +30,7 @@ export const getBailApplications = asyncHandler(async (req: Request, res: Respon
   const organizationId = req.user!.organizationId;
   const userRole = req.user!.role;
 
-  const bailApps = await bailService.getBailRecords(caseId, organizationId, userRole);
+  const bailApps = await bailService.getBailRecords(toString(caseId), organizationId, userRole);
 
   res.status(200).json({
     success: true,
