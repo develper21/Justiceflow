@@ -74,7 +74,9 @@ export class AIEnhancedService {
   }
 
   async multilingualOCR(file: Express.Multer.File, language?: string, autoDetect = true): Promise<any> {
-    const blob = new Blob([file.buffer], { type: file.mimetype });
+    // Convert Buffer to Uint8Array to fix Blob type issue
+    const uint8Array = new Uint8Array(file.buffer);
+    const blob = new Blob([uint8Array], { type: file.mimetype });
     const form = new FormData();
     form.append('file', blob, file.originalname);
     if (language) form.append('language', language);
