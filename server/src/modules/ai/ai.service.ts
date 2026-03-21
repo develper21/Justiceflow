@@ -50,7 +50,9 @@ export class AIService {
 
   async ocrExtract(file: Express.Multer.File): Promise<any> {
     const form = new FormData();
-    const blob = new Blob([file.buffer], { type: file.mimetype });
+    // Convert Buffer to Uint8Array to fix Blob type issue
+    const uint8Array = new Uint8Array(file.buffer);
+    const blob = new Blob([uint8Array], { type: file.mimetype });
     form.append('file', blob, file.originalname);
 
     const res = await fetch(`${this.baseUrl}/ocr-extract`, {
