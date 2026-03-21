@@ -80,7 +80,7 @@ export const createFIR = asyncHandler(async (req: Request, res: Response) => {
         firNumber: fir.firNumber,
         sectionsApplied: fir.sectionsApplied,
         incidentDate: fir.incidentDate,
-        policeStationName: fir.policeStation?.name,
+        policeStationName: fir.policeStationId,
       })
       .catch((err) => console.error('AI FIR indexing error (non-blocking)', err));
   } catch (err) {
@@ -100,11 +100,12 @@ export const createFIR = asyncHandler(async (req: Request, res: Response) => {
  */
 export const getFIRById = asyncHandler(async (req: Request, res: Response) => {
   const { firId } = req.params;
+  const firIdString = Array.isArray(firId) ? firId[0] : firId;
   const userId = req.user!.id;
   const userRole = req.user!.role;
   const organizationId = req.user!.organizationId;
 
-  const fir = await firService.getFIRById(firId, userId, userRole, organizationId);
+  const fir = await firService.getFIRById(firIdString, userId, userRole, organizationId);
 
   res.status(200).json({
     success: true,
