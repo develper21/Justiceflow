@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: justiceflow-backend
+    runtime: node
+    plan: free
+    repo: https://github.com/develper21/Justiceflow
+    rootDir: server
+    buildCommand: "npm install && npm run build"
+    startCommand: "npm start"
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
