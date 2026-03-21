@@ -10,6 +10,7 @@ const courtService = new CourtService();
  */
 export const submitToCourt = asyncHandler(async (req: Request, res: Response) => {
   const { caseId } = req.params;
+  const caseIdString = Array.isArray(caseId) ? caseId[0] : caseId;
   const userId = req.user!.id;
   const organizationId = req.user!.organizationId;
 
@@ -17,7 +18,7 @@ export const submitToCourt = asyncHandler(async (req: Request, res: Response) =>
     throw ApiError.badRequest('SHO must be associated with a police station');
   }
 
-  const result = await courtService.submitToCourt(caseId, req.body, userId, organizationId);
+  const result = await courtService.submitToCourt(caseIdString, req.body, userId, organizationId);
 
   res.status(200).json({
     success: true,
@@ -30,6 +31,7 @@ export const submitToCourt = asyncHandler(async (req: Request, res: Response) =>
  */
 export const intakeCase = asyncHandler(async (req: Request, res: Response) => {
   const { caseId } = req.params;
+  const caseIdString = Array.isArray(caseId) ? caseId[0] : caseId;
   const userId = req.user!.id;
   const organizationId = req.user!.organizationId;
 
@@ -37,7 +39,7 @@ export const intakeCase = asyncHandler(async (req: Request, res: Response) => {
     throw ApiError.badRequest('Court clerk must be associated with a court');
   }
 
-  const result = await courtService.intakeCase(caseId, req.body, userId, organizationId);
+  const result = await courtService.intakeCase(caseIdString, req.body, userId, organizationId);
 
   res.status(200).json({
     success: true,
@@ -50,6 +52,7 @@ export const intakeCase = asyncHandler(async (req: Request, res: Response) => {
  */
 export const createCourtAction = asyncHandler(async (req: Request, res: Response) => {
   const { caseId } = req.params;
+  const caseIdString = Array.isArray(caseId) ? caseId[0] : caseId;
   const userId = req.user!.id;
   const organizationId = req.user!.organizationId;
 
@@ -57,7 +60,7 @@ export const createCourtAction = asyncHandler(async (req: Request, res: Response
     throw ApiError.badRequest('Judge must be associated with a court');
   }
 
-  const action = await courtService.createCourtAction(caseId, req.body, userId, organizationId);
+  const action = await courtService.createCourtAction(caseIdString, req.body, userId, organizationId);
 
   res.status(201).json({
     success: true,
@@ -70,13 +73,14 @@ export const createCourtAction = asyncHandler(async (req: Request, res: Response
  */
 export const getCourtActions = asyncHandler(async (req: Request, res: Response) => {
   const { caseId } = req.params;
+  const caseIdString = Array.isArray(caseId) ? caseId[0] : caseId;
   const organizationId = req.user!.organizationId;
 
   if (!organizationId) {
     throw ApiError.badRequest('User must be associated with a court');
   }
 
-  const actions = await courtService.getCourtActions(caseId, organizationId);
+  const actions = await courtService.getCourtActions(caseIdString, organizationId);
 
   res.status(200).json({
     success: true,
