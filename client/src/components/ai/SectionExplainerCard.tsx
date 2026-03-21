@@ -241,7 +241,7 @@ export const SectionExplainerCard: React.FC<Props> = ({ defaultSection = '302', 
         )}
 
         {!loadingOptions && details && (
-          <div className="border rounded p-4 bg-gradient-to-br from-blue-50 to-indigo-50 space-y-4">
+          <div className="border rounded p-4 bg-linear-to-br from-blue-50 to-indigo-50 space-y-4">
             <div>
               <h3 className="text-lg font-bold text-gray-900">{details.title || details.section || section}</h3>
               <p className="text-sm text-gray-600 mt-1">
