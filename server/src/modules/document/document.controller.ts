@@ -17,13 +17,14 @@ const documentService = new DocumentService();
  */
 export const createDocument = asyncHandler(async (req: Request, res: Response) => {
   const { caseId } = req.params;
+  const caseIdString = Array.isArray(caseId) ? caseId[0] : caseId;
   const userId = req.user!.id;
   const userRole = req.user!.role;
   const organizationId = req.user!.organizationId;
 
   // Validate police can upload (blocked after court submission)
   if (userRole === 'POLICE' || userRole === 'SHO') {
-    await validatePoliceCanUpload(caseId, userRole);
+    await validatePoliceCanUpload(caseIdString, userRole);
   }
 
   // Handle file upload if present
@@ -33,7 +34,7 @@ export const createDocument = asyncHandler(async (req: Request, res: Response) =
     const uploadResult = await uploadToCloudinary(req.file, { folder });
 
     // Log file upload
-    await logFileUpload(userId, 'DOCUMENT', caseId, req.file.originalname);
+    await logFileUpload(userId, 'DOCUMENT', caseIdString, req.file.originalname);
   }
 
   // Parse contentJson if it's a string
@@ -52,7 +53,7 @@ export const createDocument = asyncHandler(async (req: Request, res: Response) =
   };
 
   const document = await documentService.createDocument(
-    caseId,
+    caseIdString,
     documentData,
     userId,
     userRole,
@@ -70,11 +71,12 @@ export const createDocument = asyncHandler(async (req: Request, res: Response) =
  */
 export const getDocuments = asyncHandler(async (req: Request, res: Response) => {
   const { caseId } = req.params;
+  const caseIdString = Array.isArray(caseId) ? caseId[0] : caseId;
   const userRole = req.user!.role;
   const organizationId = req.user!.organizationId;
 
   const documents = await documentService.getDocuments(
-    caseId,
+    caseIdString,
     userRole,
     organizationId
   );
@@ -90,6 +92,7 @@ export const getDocuments = asyncHandler(async (req: Request, res: Response) => 
  */
 export const finalizeDocument = asyncHandler(async (req: Request, res: Response) => {
   const { documentId } = req.params;
+  const documentIdString = Array.isArray(documentId) ? documentId[0] : documentId;
   const userId = req.user!.id;
   const organizationId = req.user!.organizationId;
 
@@ -97,7 +100,7 @@ export const finalizeDocument = asyncHandler(async (req: Request, res: Response)
     throw ApiError.badRequest('User must be associated with a police station');
   }
 
-  const document = await documentService.finalizeDocument(documentId, userId, organizationId);
+  const document = await documentService.finalizeDocument(documentIdString, userId, organizationId);
 
   res.status(200).json({
     success: true,
