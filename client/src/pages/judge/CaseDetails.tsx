@@ -512,7 +512,7 @@ export const JudgeCaseDetails: React.FC = () => {
       {isHearingDraftEnabled && isDraftModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4">
           <div className="w-full max-w-4xl rounded-lg bg-white shadow-lg overflow-hidden">
-            <div className="bg-gradient-to-r from-purple-50 to-blue-50 p-6 border-b">
+            <div className="bg-linear-to-r from-purple-50 to-blue-50 p-6 border-b">
               <div className="flex items-start justify-between">
                 <div>
                   <h3 className="text-xl font-semibold">Hearing Order Draft (AI-assisted)</h3>
