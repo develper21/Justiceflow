@@ -1,0 +1,24 @@
+{
+  "services": [
+    {
+      "type": "web",
+      "name": "justiceflow-backend",
+      "env": "docker",
+      "plan": "free",
+      "repo": "https://github.com/yourusername/JusticeFlow.git",
+      "rootDir": "server",
+      "dockerfilePath": "./Dockerfile",
+      "autoDeploy": true,
+      "envVars": [
+        {
+          "key": "NODE_ENV",
+          "value": "production"
+        },
+        {
+          "key": "PORT",
+          "value": "10000"
+        }
+      ]
+    }
+  ]
+}
