@@ -65,13 +65,13 @@ export const ReopenRequests: React.FC = () => {
       <Header title="Case Re-open Requests" subtitle="Requests pending judicial decision" />
 
       <Card>
-        {requests.length === 0 && <div>No pending requests</div>}
+        {requests.length === 0 && <div className="text-center py-8 text-navy-700">No pending requests</div>}
         {requests.map((r) => (
-          <div key={r.id} className="flex justify-between items-center py-3 border-b">
+          <div key={r.id} className="flex justify-between items-center p-4 bg-gradient-to-r from-gray-50 to-slate-50 rounded-xl border border-gray-200 mb-3 last:mb-0">
             <div>
-              <div className="font-medium">Case {r.caseId}</div>
-              <div className="text-sm text-gray-600">Requested by: {r.requester?.name}</div>
-              <div className="text-sm text-gray-600 mt-1">Reason: {r.policeReason}</div>
+              <div className="font-bold text-navy-900">Case {r.caseId}</div>
+              <div className="text-sm text-navy-700">Requested by: {r.requester?.name}</div>
+              <div className="text-sm text-navy-700 mt-1">Reason: {r.policeReason}</div>
             </div>
             <div className="space-x-2">
               <Button variant="ghost" onClick={() => window.open(`/judge/cases/${r.caseId}`, '_blank')}>View Case</Button>
