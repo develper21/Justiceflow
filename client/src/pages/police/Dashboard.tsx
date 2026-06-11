@@ -67,13 +67,13 @@ export const PoliceDashboard: React.FC = () => {
 
   // Chart data for case status
   const caseStatusData = [
-    { name: 'Under Investigation', value: underInvestigation, color: '#FF8C00' },
-    { name: 'Completed', value: completed, color: '#28A745' },
-    { name: 'In Court', value: submittedToCourt, color: '#1B4F72' },
+    { name: 'Under Investigation', value: underInvestigation, color: '#f59e0b' },
+    { name: 'Completed', value: completed, color: '#10b981' },
+    { name: 'In Court', value: submittedToCourt, color: '#3A5A97' },
     {
       name: 'Other',
       value: totalCases - underInvestigation - completed - submittedToCourt,
-      color: '#6C757D',
+      color: '#6b7280',
     },
   ].filter((item) => item.value > 0);
 
@@ -97,25 +97,25 @@ export const PoliceDashboard: React.FC = () => {
       {/* Stats Cards */}
       <div className="stats-grid">
         <div className="dashboard-stat-card">
-          <div className="dashboard-stat-number" style={{ color: '#1B4F72' }}>
+          <div className="dashboard-stat-number">
             {totalCases}
           </div>
           <div className="dashboard-stat-label">Total Cases</div>
         </div>
         <div className="dashboard-stat-card">
-          <div className="dashboard-stat-number" style={{ color: '#FF8C00' }}>
+          <div className="dashboard-stat-number">
             {underInvestigation}
           </div>
           <div className="dashboard-stat-label">Under Investigation</div>
         </div>
         <div className="dashboard-stat-card">
-          <div className="dashboard-stat-number" style={{ color: '#006400' }}>
+          <div className="dashboard-stat-number">
             {submittedToCourt}
           </div>
           <div className="dashboard-stat-label">In Court</div>
         </div>
         <div className="dashboard-stat-card">
-          <div className="dashboard-stat-number" style={{ color: '#28A745' }}>
+          <div className="dashboard-stat-number">
             {completed}
           </div>
           <div className="dashboard-stat-label">Completed</div>
@@ -171,12 +171,12 @@ export const PoliceDashboard: React.FC = () => {
       <Card title="My Assigned Cases">
         {cases.length === 0 ? (
           <div className="text-center py-8">
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 max-w-md mx-auto">
-              <p className="text-blue-800 font-medium text-lg mb-2">No Cases Assigned Yet</p>
-              <p className="text-blue-600 text-sm mb-4">
+            <div className="bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-200 rounded-2xl p-8 max-w-md mx-auto backdrop-blur-sm">
+              <p className="text-navy-900 font-bold text-xl mb-3">No Cases Assigned Yet</p>
+              <p className="text-navy-700 text-sm mb-4">
                 Cases you create will appear here once the SHO assigns them to you for investigation.
               </p>
-              <p className="text-gray-500 text-xs">
+              <p className="text-gray-600 text-sm">
                 💡 Tip: After creating an FIR, ask your SHO to assign the case to you.
               </p>
             </div>
@@ -223,7 +223,7 @@ export const PoliceDashboard: React.FC = () => {
             {cases.length > 5 && (
               <Link
                 to="/police/my-cases"
-                className="block text-center text-blue-600 hover:underline mt-4 py-2"
+                className="block text-center text-navy-700 hover:text-navy-900 font-medium mt-4 py-2 hover:underline transition-colors"
               >
                 View All {cases.length} Cases →
               </Link>
