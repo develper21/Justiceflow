@@ -8,7 +8,7 @@ import { Card } from '../../components/ui/Card';
 import { Loader } from '../../components/common/Loader';
 import apiClient from '../../api/axios';
 
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8', '#82ca9d'];
+const COLORS = ['#3A5A97', '#10b981', '#f59e0b', '#ef4444', '#6366f1', '#8b5cf6'];
 
 interface DashboardData {
     totalCases: number;
@@ -46,22 +46,22 @@ export const AnalyticsDashboard: React.FC = () => {
 
             {/* KPI Cards */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <Card className="bg-blue-50 border-blue-200">
+                <Card className="dashboard-stat-card">
                     <div className="text-center">
-                        <p className="text-sm text-gray-500 font-medium">TOTAL CASES</p>
-                        <p className="text-4xl font-bold text-blue-700">{data.totalCases}</p>
+                        <p className="text-sm text-navy-700 font-semibold uppercase tracking-wide">TOTAL CASES</p>
+                        <p className="dashboard-stat-number">{data.totalCases}</p>
                     </div>
                 </Card>
-                <Card className="bg-orange-50 border-orange-200">
+                <Card className="dashboard-stat-card">
                     <div className="text-center">
-                        <p className="text-sm text-gray-500 font-medium">ACTIVE / PENDING</p>
-                        <p className="text-4xl font-bold text-orange-700">{data.activeCases}</p>
+                        <p className="text-sm text-navy-700 font-semibold uppercase tracking-wide">ACTIVE / PENDING</p>
+                        <p className="dashboard-stat-number">{data.activeCases}</p>
                     </div>
                 </Card>
-                <Card className="bg-green-50 border-green-200">
+                <Card className="dashboard-stat-card">
                     <div className="text-center">
-                        <p className="text-sm text-gray-500 font-medium">CLOSED / SOLVED</p>
-                        <p className="text-4xl font-bold text-green-700">{data.closedCases}</p>
+                        <p className="text-sm text-navy-700 font-semibold uppercase tracking-wide">CLOSED / SOLVED</p>
+                        <p className="dashboard-stat-number">{data.closedCases}</p>
                     </div>
                 </Card>
             </div>
@@ -101,7 +101,7 @@ export const AnalyticsDashboard: React.FC = () => {
                                 <XAxis dataKey="name" />
                                 <YAxis />
                                 <Tooltip />
-                                <Line type="monotone" dataKey="cases" stroke="#8884d8" strokeWidth={3} dot={{ r: 6 }} />
+                                <Line type="monotone" dataKey="cases" stroke="#3A5A97" strokeWidth={3} dot={{ r: 6, fill: '#3A5A97' }} />
                             </LineChart>
                         </ResponsiveContainer>
                     </div>
@@ -121,7 +121,7 @@ export const AnalyticsDashboard: React.FC = () => {
                                 <XAxis dataKey="name" />
                                 <YAxis />
                                 <Tooltip />
-                                <Bar dataKey="value" fill="#82ca9d" name="Avg Days to Complete" />
+                                <Bar dataKey="value" fill="#10b981" name="Avg Days to Complete" />
                             </BarChart>
                         </ResponsiveContainer>
                     </div>
