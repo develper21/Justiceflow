@@ -141,11 +141,11 @@ export const SHOCaseDetails: React.FC = () => {
       <div className="space-y-6">
         {/* Unassigned Warning Banner */}
         {isUnassigned && currentState === CaseState.FIR_REGISTERED && (
-          <div className="bg-orange-50 border border-orange-300 rounded-lg p-4">
-            <p className="text-orange-800 font-medium">
+          <div className="bg-gradient-to-r from-orange-50 to-amber-50 border border-orange-200 rounded-2xl p-5 backdrop-blur-sm">
+            <p className="text-navy-900 font-bold">
               ⚠️ This case is awaiting officer assignment
             </p>
-            <p className="text-orange-600 text-sm mt-1">
+            <p className="text-navy-700 text-sm mt-2">
               Please assign a police officer to begin investigation
             </p>
           </div>
@@ -259,14 +259,14 @@ export const SHOCaseDetails: React.FC = () => {
               {caseData.assignments.map((assignment) => (
                 <div
                   key={assignment.id}
-                  className={`flex items-center justify-between p-3 rounded-lg ${
-                    assignment.unassignedAt ? 'bg-gray-100' : 'bg-green-50 border border-green-200'
+                  className={`flex items-center justify-between p-4 rounded-xl ${
+                    assignment.unassignedAt ? 'bg-gradient-to-r from-gray-50 to-slate-50 border border-gray-200' : 'bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200'
                   }`}
                 >
                   <div>
-                    <p className="font-medium">{assignment.assignedUser?.name}</p>
-                    <p className="text-sm text-gray-500">{assignment.assignmentReason}</p>
-                    <p className="text-xs text-gray-400">
+                    <p className="font-bold text-navy-900">{assignment.assignedUser?.name}</p>
+                    <p className="text-sm text-navy-700">{assignment.assignmentReason}</p>
+                    <p className="text-xs text-navy-600">
                       Assigned: {new Date(assignment.assignedAt).toLocaleString('en-IN')}
                     </p>
                   </div>
@@ -277,9 +277,9 @@ export const SHOCaseDetails: React.FC = () => {
               ))}
             </div>
           ) : (
-            <EmptyState 
-              title="No Assignment History" 
-              message="This case has not been assigned to any officer yet" 
+            <EmptyState
+              title="No Assignment History"
+              message="This case has not been assigned to any officer yet"
             />
           )}
         </Card>
@@ -287,29 +287,29 @@ export const SHOCaseDetails: React.FC = () => {
         {/* Investigation Summary */}
         <Card title="Investigation Summary">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-            <div className="p-4 bg-blue-50 rounded-lg">
-              <p className="text-2xl font-bold text-blue-600">
+            <div className="dashboard-stat-card">
+              <p className="dashboard-stat-number">
                 {caseData.evidence?.length || 0}
               </p>
-              <p className="text-sm text-gray-600">Evidence</p>
+              <p className="dashboard-stat-label">Evidence</p>
             </div>
-            <div className="p-4 bg-green-50 rounded-lg">
-              <p className="text-2xl font-bold text-green-600">
+            <div className="dashboard-stat-card">
+              <p className="dashboard-stat-number">
                 {caseData.witnesses?.length || 0}
               </p>
-              <p className="text-sm text-gray-600">Witnesses</p>
+              <p className="dashboard-stat-label">Witnesses</p>
             </div>
-            <div className="p-4 bg-orange-50 rounded-lg">
-              <p className="text-2xl font-bold text-orange-600">
+            <div className="dashboard-stat-card">
+              <p className="dashboard-stat-number">
                 {caseData.accused?.length || 0}
               </p>
-              <p className="text-sm text-gray-600">Accused</p>
+              <p className="dashboard-stat-label">Accused</p>
             </div>
-            <div className="p-4 bg-purple-50 rounded-lg">
-              <p className="text-2xl font-bold text-purple-600">
+            <div className="dashboard-stat-card">
+              <p className="dashboard-stat-number">
                 {caseData.documents?.length || 0}
               </p>
-              <p className="text-sm text-gray-600">Documents</p>
+              <p className="dashboard-stat-label">Documents</p>
             </div>
           </div>
         </Card>
@@ -317,12 +317,12 @@ export const SHOCaseDetails: React.FC = () => {
         {/* Under Investigation Banner */}
         {isUnderInvestigation && !isUnassigned && (
           <Card>
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-              <p className="text-blue-800 font-medium text-lg">
+            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-2xl p-5 backdrop-blur-sm">
+              <p className="text-navy-900 font-bold text-lg">
                 🔍 Investigation in Progress
               </p>
-              <p className="text-blue-600 mt-1">
-                The assigned officer is still investigating this case. 
+              <p className="text-navy-700 mt-2">
+                The assigned officer is still investigating this case.
                 Once they mark the investigation as complete, you can submit this case to court.
               </p>
             </div>
@@ -359,11 +359,11 @@ export const SHOCaseDetails: React.FC = () => {
         {/* Already Submitted */}
         {isSubmittedToCourt && (
           <Card>
-            <div className="bg-green-50 border border-green-200 rounded-lg p-4 text-center">
-              <p className="text-green-800 font-medium text-lg">
+            <div className="bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-2xl p-5 text-center backdrop-blur-sm">
+              <p className="text-navy-900 font-bold text-lg">
                 ✓ Case Submitted to Court
               </p>
-              <p className="text-green-600 mt-1">
+              <p className="text-navy-700 mt-2">
                 Editing is now locked. Awaiting court proceedings.
               </p>
             </div>
