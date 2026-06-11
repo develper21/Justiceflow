@@ -61,14 +61,14 @@ const getIcon = (type: string) => {
 const getBgColor = (type: string) => {
     switch (type) {
         case 'success':
-            return 'bg-green-50 border-green-200';
+            return 'bg-gradient-to-r from-green-50 to-emerald-50 border-green-200';
         case 'error':
-            return 'bg-red-50 border-red-200';
+            return 'bg-gradient-to-r from-red-50 to-rose-50 border-red-200';
         case 'warning':
-            return 'bg-yellow-50 border-yellow-200';
+            return 'bg-gradient-to-r from-yellow-50 to-amber-50 border-yellow-200';
         case 'info':
         default:
-            return 'bg-blue-50 border-blue-200';
+            return 'bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200';
     }
 };
 
@@ -82,21 +82,21 @@ export const CustomToast: React.FC<CustomToastProps> = ({
     return (
         <div
             className={`${t.visible ? 'animate-enter' : 'animate-leave'
-                } max-w-md w-full ${getBgColor(type)} border shadow-lg rounded-lg pointer-events-auto flex`}
+                } max-w-md w-full ${getBgColor(type)} border-2 shadow-lg rounded-xl pointer-events-auto flex backdrop-blur-sm`}
         >
             <div className="flex-1 w-0 p-4">
                 <div className="flex items-start">
-                    <div className="flex-shrink-0">{getIcon(type)}</div>
+                    <div className="shrink-0">{getIcon(type)}</div>
                     <div className="ml-3 flex-1">
-                        <p className="text-sm font-semibold text-gray-900">{title}</p>
-                        <p className="mt-1 text-sm text-gray-600">{message}</p>
+                        <p className="text-sm font-bold text-navy-900">{title}</p>
+                        <p className="mt-1 text-sm text-navy-700">{message}</p>
                         {action && (
                             <button
                                 onClick={() => {
                                     action.onClick();
                                     toast.dismiss(t.id);
                                 }}
-                                className="mt-2 text-sm font-medium text-blue-600 hover:text-blue-800"
+                                className="mt-2 text-sm font-bold text-navy-700 hover:text-navy-900 transition-colors"
                             >
                                 {action.label} →
                             </button>
@@ -107,7 +107,7 @@ export const CustomToast: React.FC<CustomToastProps> = ({
             <div className="flex border-l border-gray-200">
                 <button
                     onClick={() => toast.dismiss(t.id)}
-                    className="w-full border border-transparent rounded-none rounded-r-lg p-4 flex items-center justify-center text-sm font-medium text-gray-600 hover:text-gray-900 focus:outline-none"
+                    className="w-full border border-transparent rounded-none rounded-r-lg p-4 flex items-center justify-center text-sm font-bold text-navy-700 hover:text-navy-900 focus:outline-none transition-colors"
                 >
                     <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
