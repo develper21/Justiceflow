@@ -12,7 +12,7 @@ export const Textarea: React.FC<TextareaProps> = ({
   ...props
 }) => {
   return (
-    <div className="mb-4">
+    <div className="mb-5">
       {label && (
         <label className="label">
           {label}
@@ -20,12 +20,12 @@ export const Textarea: React.FC<TextareaProps> = ({
         </label>
       )}
       <textarea
-        className={`input ${error ? 'border-red-500 focus:ring-red-500' : ''} ${className}`}
+        className={`input ${error ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : ''} ${className}`}
         rows={4}
         {...props}
       />
       {error && (
-        <p className="mt-1 text-sm text-red-600">{error}</p>
+        <p className="mt-2 text-sm text-red-600 font-medium">{error}</p>
       )}
     </div>
   );
