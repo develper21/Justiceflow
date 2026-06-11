@@ -40,11 +40,11 @@ export const Navbar: React.FC = () => {
   const closeMobileMenu = () => setMobileMenuOpen(false);
 
   return (
-    <nav className="bg-white shadow-sm border-b border-gray-200">
+    <nav className="bg-gradient-to-r from-white/90 to-white/80 backdrop-blur-xl shadow-lg border-b-2 border-white/60 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
-            <Link to={getDashboardLink()} className="flex items-center">
+            <Link to={getDashboardLink()} className="flex items-center hover:opacity-80 transition-opacity">
               <GovernmentEmblem />
             </Link>
           </div>
@@ -58,9 +58,9 @@ export const Navbar: React.FC = () => {
                   <SearchBar />
                 </div>
 
-                <div className="text-sm hidden lg:block">
-                  <p className="font-medium text-gray-900">{user.name}</p>
-                  <p className="text-gray-500">{user.role.replace('_', ' ')}</p>
+                <div className="text-sm hidden lg:block bg-gradient-to-r from-gray-50 to-slate-50 px-4 py-2 rounded-xl border border-gray-200">
+                  <p className="font-bold text-navy-900">{user.name}</p>
+                  <p className="text-navy-700">{user.role.replace('_', ' ')}</p>
                 </div>
 
                 {/* Notification bell */}
@@ -78,7 +78,7 @@ export const Navbar: React.FC = () => {
                 <NotificationBell />
                 <button
                   onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                  className="ml-2 p-2 rounded-lg text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="ml-2 p-2 rounded-xl text-navy-700 hover:bg-gradient-to-r from-navy-50 to-slate-50 focus:outline-none focus:ring-2 focus:ring-navy-500 transition-all"
                   aria-label="Toggle menu"
                   aria-expanded={mobileMenuOpen}
                 >
@@ -100,27 +100,27 @@ export const Navbar: React.FC = () => {
 
       {/* Desktop Role-based navigation */}
       {user && (
-        <div className="border-t border-gray-200 hidden md:block">
+        <div className="border-t-2 border-gray-200/60 hidden md:block bg-gradient-to-r from-white/60 to-white/40 backdrop-blur-sm">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex space-x-8 h-12 items-center overflow-x-auto">
               {user.role === UserRole.POLICE && (
                 <>
-                  <Link to="/police/dashboard" className="text-sm text-gray-700 hover:text-blue-600 whitespace-nowrap">
+                  <Link to="/police/dashboard" className="text-sm font-bold text-white bg-gradient-to-r from-navy-600 to-navy-700 hover:from-navy-700 hover:to-navy-800 px-4 py-2 rounded-xl whitespace-nowrap transition-all shadow-md">
                     Dashboard
                   </Link>
-                  <Link to="/police/analytics" className="text-sm text-gray-700 hover:text-blue-600 whitespace-nowrap font-medium text-blue-700">
-                    Analytics 📊
+                  <Link to="/police/analytics" className="text-sm font-bold text-white bg-gradient-to-r from-navy-600 to-navy-700 hover:from-navy-700 hover:to-navy-800 px-4 py-2 rounded-xl whitespace-nowrap transition-all shadow-md">
+                    Analytics
                   </Link>
-                  <Link to="/police/create-fir" className="text-sm text-gray-700 hover:text-blue-600 whitespace-nowrap">
+                  <Link to="/police/create-fir" className="text-sm font-bold text-white bg-gradient-to-r from-navy-600 to-navy-700 hover:from-navy-700 hover:to-navy-800 px-4 py-2 rounded-xl whitespace-nowrap transition-all shadow-md">
                     Create FIR
                   </Link>
-                  <Link to="/police/my-cases" className="text-sm text-gray-700 hover:text-blue-600 whitespace-nowrap">
+                  <Link to="/police/my-cases" className="text-sm font-bold text-white bg-gradient-to-r from-navy-600 to-navy-700 hover:from-navy-700 hover:to-navy-800 px-4 py-2 rounded-xl whitespace-nowrap transition-all shadow-md">
                     My Cases
                   </Link>
-                  <Link to="/police/request-documents" className="text-sm text-gray-700 hover:text-blue-600 whitespace-nowrap">
+                  <Link to="/police/request-documents" className="text-sm font-bold text-white bg-gradient-to-r from-navy-600 to-navy-700 hover:from-navy-700 hover:to-navy-800 px-4 py-2 rounded-xl whitespace-nowrap transition-all shadow-md">
                     Request Documents
                   </Link>
-                  <Link to="/police/case-reopen" className="text-sm text-gray-700 hover:text-blue-600 whitespace-nowrap">
+                  <Link to="/police/case-reopen" className="text-sm font-bold text-white bg-gradient-to-r from-navy-600 to-navy-700 hover:from-navy-700 hover:to-navy-800 px-4 py-2 rounded-xl whitespace-nowrap transition-all shadow-md">
                     Re-open Requests
                   </Link>
                 </>
@@ -128,13 +128,13 @@ export const Navbar: React.FC = () => {
 
               {user.role === UserRole.SHO && (
                 <>
-                  <Link to="/sho/dashboard" className="text-sm text-gray-700 hover:text-blue-600 whitespace-nowrap">
+                  <Link to="/sho/dashboard" className="text-sm font-bold text-navy-700 hover:text-navy-900 hover:bg-gradient-to-r from-navy-50 to-slate-50 px-3 py-2 rounded-xl whitespace-nowrap transition-all">
                     Dashboard
                   </Link>
-                  <Link to="/sho/all-cases" className="text-sm text-gray-700 hover:text-blue-600 whitespace-nowrap">
+                  <Link to="/sho/all-cases" className="text-sm font-bold text-navy-700 hover:text-navy-900 hover:bg-gradient-to-r from-navy-50 to-slate-50 px-3 py-2 rounded-xl whitespace-nowrap transition-all">
                     All Cases
                   </Link>
-                  <Link to="/sho/document-requests" className="text-sm text-gray-700 hover:text-blue-600 whitespace-nowrap">
+                  <Link to="/sho/document-requests" className="text-sm font-bold text-navy-700 hover:text-navy-900 hover:bg-gradient-to-r from-navy-50 to-slate-50 px-3 py-2 rounded-xl whitespace-nowrap transition-all">
                     Document Requests
                   </Link>
                 </>
@@ -142,13 +142,13 @@ export const Navbar: React.FC = () => {
 
               {user.role === UserRole.COURT_CLERK && (
                 <>
-                  <Link to="/court/dashboard" className="text-sm text-gray-700 hover:text-blue-600 whitespace-nowrap">
+                  <Link to="/court/dashboard" className="text-sm font-bold text-navy-700 hover:text-navy-900 hover:bg-gradient-to-r from-navy-50 to-slate-50 px-3 py-2 rounded-xl whitespace-nowrap transition-all">
                     Dashboard
                   </Link>
-                  <Link to="/court/incoming-cases" className="text-sm text-gray-700 hover:text-blue-600 whitespace-nowrap">
+                  <Link to="/court/incoming-cases" className="text-sm font-bold text-navy-700 hover:text-navy-900 hover:bg-gradient-to-r from-navy-50 to-slate-50 px-3 py-2 rounded-xl whitespace-nowrap transition-all">
                     Incoming Cases
                   </Link>
-                  <Link to="/court/document-requests" className="text-sm text-gray-700 hover:text-blue-600 whitespace-nowrap">
+                  <Link to="/court/document-requests" className="text-sm font-bold text-navy-700 hover:text-navy-900 hover:bg-gradient-to-r from-navy-50 to-slate-50 px-3 py-2 rounded-xl whitespace-nowrap transition-all">
                     Document Requests
                   </Link>
                 </>
@@ -156,13 +156,13 @@ export const Navbar: React.FC = () => {
 
               {user.role === UserRole.JUDGE && (
                 <>
-                  <Link to="/judge/dashboard" className="text-sm text-gray-700 hover:text-blue-600 whitespace-nowrap">
+                  <Link to="/judge/dashboard" className="text-sm font-bold text-navy-700 hover:text-navy-900 hover:bg-gradient-to-r from-navy-50 to-slate-50 px-3 py-2 rounded-xl whitespace-nowrap transition-all">
                     Dashboard
                   </Link>
-                  <Link to="/judge/cases" className="text-sm text-gray-700 hover:text-blue-600 whitespace-nowrap">
+                  <Link to="/judge/cases" className="text-sm font-bold text-navy-700 hover:text-navy-900 hover:bg-gradient-to-r from-navy-50 to-slate-50 px-3 py-2 rounded-xl whitespace-nowrap transition-all">
                     Cases
                   </Link>
-                  <Link to="/judge/reopen-requests" className="text-sm text-gray-700 hover:text-blue-600 whitespace-nowrap">
+                  <Link to="/judge/reopen-requests" className="text-sm font-bold text-navy-700 hover:text-navy-900 hover:bg-gradient-to-r from-navy-50 to-slate-50 px-3 py-2 rounded-xl whitespace-nowrap transition-all">
                     Re-open Requests
                   </Link>
                 </>
@@ -174,12 +174,12 @@ export const Navbar: React.FC = () => {
 
       {/* Mobile menu */}
       {user && mobileMenuOpen && (
-        <div className="md:hidden border-t border-gray-200 bg-white">
+        <div className="md:hidden border-t-2 border-gray-200/60 bg-gradient-to-b from-white/95 to-white/90 backdrop-blur-xl">
           <div className="px-4 py-3 space-y-1">
             {/* User info */}
-            <div className="pb-3 mb-3 border-b border-gray-200">
-              <p className="font-medium text-gray-900">{user.name}</p>
-              <p className="text-sm text-gray-500">{user.role.replace('_', ' ')}</p>
+            <div className="pb-3 mb-3 border-b-2 border-gray-200 bg-gradient-to-r from-gray-50 to-slate-50 px-4 py-3 rounded-xl">
+              <p className="font-bold text-navy-900">{user.name}</p>
+              <p className="text-sm text-navy-700">{user.role.replace('_', ' ')}</p>
             </div>
 
             {/* Navigation links */}
@@ -188,35 +188,35 @@ export const Navbar: React.FC = () => {
                 <Link
                   to="/police/dashboard"
                   onClick={closeMobileMenu}
-                  className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100"
+                  className="block px-3 py-2 rounded-xl text-base font-bold text-navy-700 hover:bg-gradient-to-r from-navy-50 to-slate-50 transition-all"
                 >
                   Dashboard
                 </Link>
                 <Link
                   to="/police/create-fir"
                   onClick={closeMobileMenu}
-                  className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100"
+                  className="block px-3 py-2 rounded-xl text-base font-bold text-navy-700 hover:bg-gradient-to-r from-navy-50 to-slate-50 transition-all"
                 >
                   Create FIR
                 </Link>
                 <Link
                   to="/police/my-cases"
                   onClick={closeMobileMenu}
-                  className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100"
+                  className="block px-3 py-2 rounded-xl text-base font-bold text-navy-700 hover:bg-gradient-to-r from-navy-50 to-slate-50 transition-all"
                 >
                   My Cases
                 </Link>
                 <Link
                   to="/police/request-documents"
                   onClick={closeMobileMenu}
-                  className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100"
+                  className="block px-3 py-2 rounded-xl text-base font-bold text-navy-700 hover:bg-gradient-to-r from-navy-50 to-slate-50 transition-all"
                 >
                   Request Documents
                 </Link>
                 <Link
                   to="/police/case-reopen"
                   onClick={closeMobileMenu}
-                  className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100"
+                  className="block px-3 py-2 rounded-xl text-base font-bold text-navy-700 hover:bg-gradient-to-r from-navy-50 to-slate-50 transition-all"
                 >
                   Re-open Requests
                 </Link>
@@ -228,21 +228,21 @@ export const Navbar: React.FC = () => {
                 <Link
                   to="/sho/dashboard"
                   onClick={closeMobileMenu}
-                  className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100"
+                  className="block px-3 py-2 rounded-xl text-base font-bold text-navy-700 hover:bg-gradient-to-r from-navy-50 to-slate-50 transition-all"
                 >
                   Dashboard
                 </Link>
                 <Link
                   to="/sho/all-cases"
                   onClick={closeMobileMenu}
-                  className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100"
+                  className="block px-3 py-2 rounded-xl text-base font-bold text-navy-700 hover:bg-gradient-to-r from-navy-50 to-slate-50 transition-all"
                 >
                   All Cases
                 </Link>
                 <Link
                   to="/sho/document-requests"
                   onClick={closeMobileMenu}
-                  className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100"
+                  className="block px-3 py-2 rounded-xl text-base font-bold text-navy-700 hover:bg-gradient-to-r from-navy-50 to-slate-50 transition-all"
                 >
                   Document Requests
                 </Link>
@@ -254,21 +254,21 @@ export const Navbar: React.FC = () => {
                 <Link
                   to="/court/dashboard"
                   onClick={closeMobileMenu}
-                  className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100"
+                  className="block px-3 py-2 rounded-xl text-base font-bold text-navy-700 hover:bg-gradient-to-r from-navy-50 to-slate-50 transition-all"
                 >
                   Dashboard
                 </Link>
                 <Link
                   to="/court/incoming-cases"
                   onClick={closeMobileMenu}
-                  className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100"
+                  className="block px-3 py-2 rounded-xl text-base font-bold text-navy-700 hover:bg-gradient-to-r from-navy-50 to-slate-50 transition-all"
                 >
                   Incoming Cases
                 </Link>
                 <Link
                   to="/court/document-requests"
                   onClick={closeMobileMenu}
-                  className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100"
+                  className="block px-3 py-2 rounded-xl text-base font-bold text-navy-700 hover:bg-gradient-to-r from-navy-50 to-slate-50 transition-all"
                 >
                   Document Requests
                 </Link>
@@ -280,21 +280,21 @@ export const Navbar: React.FC = () => {
                 <Link
                   to="/judge/dashboard"
                   onClick={closeMobileMenu}
-                  className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100"
+                  className="block px-3 py-2 rounded-xl text-base font-bold text-navy-700 hover:bg-gradient-to-r from-navy-50 to-slate-50 transition-all"
                 >
                   Dashboard
                 </Link>
                 <Link
                   to="/judge/cases"
                   onClick={closeMobileMenu}
-                  className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100"
+                  className="block px-3 py-2 rounded-xl text-base font-bold text-navy-700 hover:bg-gradient-to-r from-navy-50 to-slate-50 transition-all"
                 >
                   Cases
                 </Link>
                 <Link
                   to="/judge/reopen-requests"
                   onClick={closeMobileMenu}
-                  className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100"
+                  className="block px-3 py-2 rounded-xl text-base font-bold text-navy-700 hover:bg-gradient-to-r from-navy-50 to-slate-50 transition-all"
                 >
                   Re-open Requests
                 </Link>
@@ -307,7 +307,7 @@ export const Navbar: React.FC = () => {
                 closeMobileMenu();
                 handleLogout();
               }}
-              className="w-full text-left px-3 py-2 rounded-md text-base font-medium text-red-600 hover:bg-red-50 mt-3"
+              className="w-full text-left px-3 py-2 rounded-xl text-base font-bold text-red-600 hover:bg-gradient-to-r from-red-50 to-rose-50 mt-3 transition-all"
             >
               Logout
             </button>
