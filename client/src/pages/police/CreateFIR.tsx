@@ -128,11 +128,11 @@ export const CreateFIR: React.FC = () => {
             maxSize={20}
           />
 
-          <div className="rounded-lg border border-dashed border-blue-200 bg-blue-50 p-4">
+          <div className="rounded-2xl border-2 border-dashed border-blue-200 bg-gradient-to-br from-blue-50 to-indigo-50 p-6 backdrop-blur-sm">
             <div className="flex items-center justify-between">
               <div>
-                <p className="font-semibold text-blue-800">Extract Document Text</p>
-                <p className="text-xs text-blue-700">
+                <p className="font-bold text-navy-900">Extract Document Text</p>
+                <p className="text-sm text-navy-700">
                   AI-generated output — requires officer review before saving.
                 </p>
               </div>
@@ -148,10 +148,10 @@ export const CreateFIR: React.FC = () => {
             </div>
 
             {extractError && (
-              <p className="mt-2 text-sm text-red-600">{extractError}</p>
+              <p className="mt-3 text-sm text-red-600 font-medium">{extractError}</p>
             )}
 
-            <div className="mt-3">
+            <div className="mt-4">
               <Textarea
                 label="Extracted Text"
                 value={extractedText}
@@ -159,7 +159,7 @@ export const CreateFIR: React.FC = () => {
                 rows={6}
                 placeholder="Extracted text will appear here"
               />
-              <p className="text-xs text-gray-500 mt-1">
+              <p className="text-sm text-gray-600 mt-2">
                 Preview mode — content is not recorded until formally submitted.
               </p>
             </div>
