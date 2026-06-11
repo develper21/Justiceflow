@@ -62,16 +62,16 @@ export const Modal: React.FC<ModalProps> = ({
             aria-labelledby={title ? 'modal-title' : undefined}
         >
             <div
-                className={`w-full ${sizeClasses[size]} rounded-lg bg-white shadow-2xl overflow-hidden animate-fadeIn`}
+                className={`w-full ${sizeClasses[size]} rounded-3xl bg-white/90 backdrop-blur-xl shadow-2xl overflow-hidden animate-fadeIn border border-white/50`}
                 onClick={(e) => e.stopPropagation()}
             >
                 {/* Header */}
                 {(title || showCloseButton) && (
-                    <div className={`bg-gradient-to-r from-purple-50 to-blue-50 p-6 border-b ${headerClassName}`}>
+                    <div className={`bg-gradient-to-r from-navy-50 to-blue-50 p-6 border-b border-gray-200 ${headerClassName}`}>
                         <div className="flex items-start justify-between">
                             <div className="flex-1">
                                 {title && (
-                                    <h3 id="modal-title" className="text-xl font-semibold text-gray-900">
+                                    <h3 id="modal-title" className="text-2xl font-bold text-navy-900">
                                         {title}
                                     </h3>
                                 )}
@@ -108,7 +108,7 @@ export const Modal: React.FC<ModalProps> = ({
 
                 {/* Footer */}
                 {footer && (
-                    <div className={`bg-gray-50 px-6 py-4 border-t ${footerClassName}`}>
+                    <div className={`bg-gradient-to-r from-gray-50 to-slate-50 px-6 py-4 border-t border-gray-200 ${footerClassName}`}>
                         {footer}
                     </div>
                 )}
