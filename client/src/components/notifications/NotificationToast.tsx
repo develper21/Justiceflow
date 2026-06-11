@@ -55,8 +55,8 @@ export const NotificationToast: React.FC<NotificationToastProps> = ({
                 <div className="flex items-start gap-3">
                     <span className="text-2xl">{getIcon(notification.type)}</span>
                     <div className="flex-1 min-w-0">
-                        <p className="font-semibold text-gray-900">{notification.title}</p>
-                        <p className="text-sm text-gray-600 mt-0.5">{notification.message}</p>
+                        <p className="font-bold text-navy-900">{notification.title}</p>
+                        <p className="text-sm text-navy-700 mt-0.5">{notification.message}</p>
                     </div>
                 </div>
             );
