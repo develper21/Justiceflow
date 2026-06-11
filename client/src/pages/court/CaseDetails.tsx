@@ -268,29 +268,29 @@ export const CourtCaseDetails: React.FC = () => {
         {/* Investigation Summary */}
         <Card title="Case Summary">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-            <div className="p-4 bg-blue-50 rounded-lg">
-              <p className="text-2xl font-bold text-blue-600">
+            <div className="dashboard-stat-card">
+              <p className="dashboard-stat-number">
                 {caseData.evidence?.length || 0}
               </p>
-              <p className="text-sm text-gray-600">Evidence Items</p>
+              <p className="dashboard-stat-label">Evidence Items</p>
             </div>
-            <div className="p-4 bg-green-50 rounded-lg">
-              <p className="text-2xl font-bold text-green-600">
+            <div className="dashboard-stat-card">
+              <p className="dashboard-stat-number">
                 {caseData.witnesses?.length || 0}
               </p>
-              <p className="text-sm text-gray-600">Witnesses</p>
+              <p className="dashboard-stat-label">Witnesses</p>
             </div>
-            <div className="p-4 bg-orange-50 rounded-lg">
-              <p className="text-2xl font-bold text-orange-600">
+            <div className="dashboard-stat-card">
+              <p className="dashboard-stat-number">
                 {caseData.accused?.length || 0}
               </p>
-              <p className="text-sm text-gray-600">Accused</p>
+              <p className="dashboard-stat-label">Accused</p>
             </div>
-            <div className="p-4 bg-purple-50 rounded-lg">
-              <p className="text-2xl font-bold text-purple-600">
+            <div className="dashboard-stat-card">
+              <p className="dashboard-stat-number">
                 {caseData.documents?.length || 0}
               </p>
-              <p className="text-sm text-gray-600">Documents</p>
+              <p className="dashboard-stat-label">Documents</p>
             </div>
           </div>
         </Card>
@@ -323,11 +323,11 @@ export const CourtCaseDetails: React.FC = () => {
         {/* Already Accepted */}
         {currentState === CaseState.COURT_ACCEPTED && (
           <Card>
-            <div className="bg-green-50 border border-green-200 rounded-lg p-4 text-center">
-              <p className="text-green-800 font-medium text-lg">
+            <div className="bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-2xl p-5 text-center backdrop-blur-sm">
+              <p className="text-navy-900 font-bold text-lg">
                 ✓ Case Accepted by Court
               </p>
-              <p className="text-green-600 mt-1">
+              <p className="text-navy-700 mt-2">
                 Case is ready for court proceedings
               </p>
             </div>
@@ -346,12 +346,12 @@ export const CourtCaseDetails: React.FC = () => {
               {courtActions.map((action) => (
                 <div
                   key={action.id}
-                  className="p-4 border rounded-lg bg-gray-50"
+                  className="p-4 bg-gradient-to-r from-gray-50 to-slate-50 rounded-xl border border-gray-200"
                 >
                   <div className="flex justify-between items-start">
                     <div>
-                      <p className="font-medium">{action.actionType.replace(/_/g, ' ')}</p>
-                      <p className="text-sm text-gray-600 mt-1">
+                      <p className="font-bold text-navy-900">{action.actionType.replace(/_/g, ' ')}</p>
+                      <p className="text-sm text-navy-700 mt-1">
                         {new Date(action.actionDate).toLocaleString('en-IN')}
                       </p>
                     </div>
