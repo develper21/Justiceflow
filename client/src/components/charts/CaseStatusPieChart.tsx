@@ -18,7 +18,7 @@ export const CaseStatusPieChart: React.FC<CaseStatusPieChartProps> = ({ data, ti
 
     if (total === 0) {
         return (
-            <div className="flex items-center justify-center h-64 text-gray-500">
+            <div className="flex items-center justify-center h-64 text-navy-700">
                 <div className="text-center">
                     <div className="text-4xl mb-2">📊</div>
                     <p>No data available</p>
@@ -29,7 +29,7 @@ export const CaseStatusPieChart: React.FC<CaseStatusPieChartProps> = ({ data, ti
 
     return (
         <div className="w-full">
-            {title && <h3 className="text-lg font-semibold mb-4 text-gray-900">{title}</h3>}
+            {title && <h3 className="text-lg font-bold mb-4 text-navy-900">{title}</h3>}
             <ResponsiveContainer width="100%" height={300}>
                 <PieChart>
                     <Pie
@@ -57,8 +57,8 @@ export const CaseStatusPieChart: React.FC<CaseStatusPieChartProps> = ({ data, ti
                             className="w-3 h-3 rounded-full"
                             style={{ backgroundColor: item.color }}
                         ></div>
-                        <span className="text-gray-700">
-                            {item.name}: <span className="font-semibold">{item.value}</span>
+                        <span className="text-navy-700">
+                            {item.name}: <span className="font-bold">{item.value}</span>
                         </span>
                     </div>
                 ))}
