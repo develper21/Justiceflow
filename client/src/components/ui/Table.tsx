@@ -31,25 +31,25 @@ export function Table<T extends { id: string }>({
 
   return (
     <div className="overflow-x-auto">
-      <table className="min-w-full divide-y divide-gray-200">
-        <thead className="bg-gray-50">
+      <table className="min-w-full">
+        <thead>
           <tr>
             {columns.map((column, index) => (
               <th
                 key={getColumnKey(column, index)}
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                className="px-6 py-4 text-left text-sm font-semibold text-white uppercase tracking-wider"
               >
                 {column.header}
               </th>
             ))}
           </tr>
         </thead>
-        <tbody className="bg-white divide-y divide-gray-200">
+        <tbody>
           {data.map((item) => (
             <tr
               key={item.id}
               onClick={() => onRowClick?.(item)}
-              className={onRowClick ? 'hover:bg-gray-50 cursor-pointer' : ''}
+              className={onRowClick ? 'cursor-pointer hover:bg-blue-50/50' : ''}
             >
               {columns.map((column, index) => {
                 const fieldKey = (column.key || column.accessor) as keyof T;
@@ -58,7 +58,7 @@ export function Table<T extends { id: string }>({
                 return (
                   <td
                     key={getColumnKey(column, index)}
-                    className="px-6 py-4 whitespace-nowrap text-sm text-gray-900"
+                    className="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
                   >
                     {column.render
                       ? column.render(value, item)
