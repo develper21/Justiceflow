@@ -29,15 +29,15 @@ export const MyReopenRequests: React.FC = () => {
     <div className="p-6">
       <Header title="My Re-open Requests" subtitle="Requests submitted by you" />
       <Card>
-        {requests.length === 0 && <div>No requests</div>}
+        {requests.length === 0 && <div className="text-center py-8 text-gray-600">No requests</div>}
         {requests.map((r) => (
-          <div key={r.id} className="flex justify-between items-center py-3 border-b">
+          <div key={r.id} className="flex justify-between items-center p-4 bg-gradient-to-r from-gray-50 to-slate-50 rounded-xl border border-gray-200 mb-3 last:mb-0">
             <div>
-              <div className="font-medium">Case {r.caseId}</div>
-              <div className="text-sm text-gray-600">Status: {r.status}</div>
-              <div className="text-sm text-gray-600">Reason: {r.policeReason}</div>
+              <div className="font-bold text-navy-900">Case {r.caseId}</div>
+              <div className="text-sm text-navy-700 mt-1">Status: {r.status}</div>
+              <div className="text-sm text-navy-700">Reason: {r.policeReason}</div>
             </div>
-            <div className="text-sm text-gray-600">{r.decidedAt ? new Date(r.decidedAt).toLocaleString() : new Date(r.createdAt).toLocaleString()}</div>
+            <div className="text-sm text-navy-600 font-medium">{r.decidedAt ? new Date(r.decidedAt).toLocaleString() : new Date(r.createdAt).toLocaleString()}</div>
           </div>
         ))}
       </Card>
