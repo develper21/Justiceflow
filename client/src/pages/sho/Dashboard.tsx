@@ -98,19 +98,19 @@ export const SHODashboard: React.FC = () => {
       {/* Stats Cards */}
       <div className="stats-grid">
         <div className="dashboard-stat-card">
-          <div className="dashboard-stat-number" style={{ color: '#1B4F72' }}>{totalCases}</div>
+          <div className="dashboard-stat-number">{totalCases}</div>
           <div className="dashboard-stat-label">Total Cases</div>
         </div>
         <div className="dashboard-stat-card">
-          <div className="dashboard-stat-number" style={{ color: '#8B0000' }}>{unassignedCases.length}</div>
+          <div className="dashboard-stat-number">{unassignedCases.length}</div>
           <div className="dashboard-stat-label">Unassigned</div>
         </div>
         <div className="dashboard-stat-card">
-          <div className="dashboard-stat-number" style={{ color: '#FF8C00' }}>{pendingReview}</div>
+          <div className="dashboard-stat-number">{pendingReview}</div>
           <div className="dashboard-stat-label">Ready for Court</div>
         </div>
         <div className="dashboard-stat-card">
-          <div className="dashboard-stat-number" style={{ color: '#006400' }}>{submittedToCourt}</div>
+          <div className="dashboard-stat-number">{submittedToCourt}</div>
           <div className="dashboard-stat-label">Submitted to Court</div>
         </div>
       </div>
@@ -212,7 +212,7 @@ export const SHODashboard: React.FC = () => {
                 </Link>
               );
             })}
-            <Link to="/sho/all-cases" className="block text-center text-blue-600 hover:underline py-2">
+            <Link to="/sho/all-cases" className="block text-center text-navy-700 hover:text-navy-900 font-medium py-2 hover:underline transition-colors">
               View All Cases →
             </Link>
           </div>
