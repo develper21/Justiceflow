@@ -128,9 +128,9 @@ export const SectionExplainerCard: React.FC<Props> = ({ defaultSection = '302', 
   const formatFlag = (value?: boolean) => {
     if (value === undefined || value === null) return 'N/A';
     return value ? (
-      <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">Yes</span>
+      <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gradient-to-r from-green-50 to-emerald-50 text-navy-900 border border-green-200">Yes</span>
     ) : (
-      <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">No</span>
+      <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gradient-to-r from-red-50 to-rose-50 text-navy-900 border border-red-200">No</span>
     );
   };
 
@@ -241,45 +241,45 @@ export const SectionExplainerCard: React.FC<Props> = ({ defaultSection = '302', 
         )}
 
         {!loadingOptions && details && (
-          <div className="border rounded p-4 bg-linear-to-br from-blue-50 to-indigo-50 space-y-4">
+          <div className="border-2 border-gray-200 rounded-2xl p-5 bg-gradient-to-br from-blue-50 to-indigo-50 backdrop-blur-sm space-y-4">
             <div>
-              <h3 className="text-lg font-bold text-gray-900">{details.title || details.section || section}</h3>
-              <p className="text-sm text-gray-600 mt-1">
+              <h3 className="text-lg font-bold text-navy-900">{details.title || details.section || section}</h3>
+              <p className="text-sm text-navy-700 mt-1">
                 {details.section || `${codeType.toUpperCase()} ${section}`}
               </p>
             </div>
 
             {details.description && (
               <div>
-                <p className="text-sm font-semibold text-gray-700 mb-1">Description</p>
-                <p className="text-sm text-gray-700 whitespace-pre-line bg-white rounded p-2 border-l-4 border-blue-400">{details.description}</p>
+                <p className="text-sm font-bold text-navy-900 mb-2">Description</p>
+                <p className="text-sm text-navy-700 whitespace-pre-line bg-white rounded-xl p-3 border-l-4 border-navy-600">{details.description}</p>
               </div>
             )}
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {details.punishment && (
-                <div className="bg-white rounded p-3 border border-gray-200">
-                  <p className="text-xs font-semibold text-gray-600 uppercase tracking-wide">Punishment</p>
-                  <p className="text-sm text-gray-900 mt-1 font-medium">{details.punishment}</p>
+                <div className="bg-white rounded-xl p-4 border border-gray-200 shadow-sm">
+                  <p className="text-xs font-bold text-navy-700 uppercase tracking-wide">Punishment</p>
+                  <p className="text-sm text-navy-900 mt-1 font-medium">{details.punishment}</p>
                 </div>
               )}
 
               {details.category && (
-                <div className="bg-white rounded p-3 border border-gray-200">
-                  <p className="text-xs font-semibold text-gray-600 uppercase tracking-wide">Category</p>
-                  <p className="text-sm text-gray-900 mt-1 font-medium">{details.category}</p>
+                <div className="bg-white rounded-xl p-4 border border-gray-200 shadow-sm">
+                  <p className="text-xs font-bold text-navy-700 uppercase tracking-wide">Category</p>
+                  <p className="text-sm text-navy-900 mt-1 font-medium">{details.category}</p>
                 </div>
               )}
 
-              <div className="bg-white rounded p-3 border border-gray-200">
-                <p className="text-xs font-semibold text-gray-600 uppercase tracking-wide">Bailable</p>
+              <div className="bg-white rounded-xl p-4 border border-gray-200 shadow-sm">
+                <p className="text-xs font-bold text-navy-700 uppercase tracking-wide">Bailable</p>
                 <div className="mt-1">
                   {formatFlag(details.bailable)}
                 </div>
               </div>
 
-              <div className="bg-white rounded p-3 border border-gray-200">
-                <p className="text-xs font-semibold text-gray-600 uppercase tracking-wide">Cognizable</p>
+              <div className="bg-white rounded-xl p-4 border border-gray-200 shadow-sm">
+                <p className="text-xs font-bold text-navy-700 uppercase tracking-wide">Cognizable</p>
                 <div className="mt-1">
                   {formatFlag(details.cognizable)}
                 </div>
@@ -288,7 +288,7 @@ export const SectionExplainerCard: React.FC<Props> = ({ defaultSection = '302', 
 
             {details.relatedSections && Array.isArray(details.relatedSections) && details.relatedSections.length > 0 && (
               <div>
-                <p className="text-sm font-semibold text-gray-700 mb-2">Related Sections</p>
+                <p className="text-sm font-bold text-navy-900 mb-2">Related Sections</p>
                 <div className="flex flex-wrap gap-2">
                   {details.relatedSections.map((rs: string) => (
                     <Badge key={rs} variant="info">{rs}</Badge>
@@ -301,12 +301,12 @@ export const SectionExplainerCard: React.FC<Props> = ({ defaultSection = '302', 
 
         {precedents.length > 0 && (
           <div className="space-y-2">
-            <p className="text-sm font-semibold">Precedents</p>
+            <p className="text-sm font-bold text-navy-900">Precedents</p>
             <div className="space-y-2">
               {precedents.map((p, idx) => (
-                <div key={idx} className="border rounded p-2 bg-gray-50">
-                  <p className="font-medium text-sm">{p?.title || p?.case_name || 'Precedent'}</p>
-                  {p?.summary && <p className="text-xs text-gray-600 mt-1 line-clamp-3">{p.summary}</p>}
+                <div key={idx} className="border border-gray-200 rounded-xl p-3 bg-gradient-to-r from-gray-50 to-slate-50">
+                  <p className="font-bold text-sm text-navy-900">{p?.title || p?.case_name || 'Precedent'}</p>
+                  {p?.summary && <p className="text-xs text-navy-700 mt-1 line-clamp-3">{p.summary}</p>}
                 </div>
               ))}
             </div>
@@ -314,11 +314,11 @@ export const SectionExplainerCard: React.FC<Props> = ({ defaultSection = '302', 
         )}
 
         {precedentsFetched && precedents.length === 0 && !loading.precedents && (
-          <p className="text-sm text-gray-600">No precedents found yet. Try another section or code.</p>
+          <p className="text-sm text-navy-700">No precedents found yet. Try another section or code.</p>
         )}
 
         {detailsFetched && !details && !loading.details && (
-          <p className="text-sm text-gray-600">No section details found. This section may not be in the database yet.</p>
+          <p className="text-sm text-navy-700">No section details found. This section may not be in the database yet.</p>
         )}
       </div>
     </Card>
