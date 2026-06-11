@@ -111,7 +111,7 @@ export const JudgeCases: React.FC = () => {
                 header: 'FIR Number',
                 accessor: 'id',
                 render: (_value, row) => (
-                  <span className="font-medium">
+                  <span className="font-medium text-navy-700">
                     {row.fir?.firNumber || row.id.slice(0, 8)}
                   </span>
                 ),
@@ -154,7 +154,7 @@ export const JudgeCases: React.FC = () => {
                 header: 'Action',
                 accessor: 'id',
                 render: () => (
-                  <span className="text-blue-600 font-medium">View Details →</span>
+                  <span className="text-navy-700 font-medium hover:text-navy-900 transition-colors">View Details →</span>
                 ),
               },
             ]}
