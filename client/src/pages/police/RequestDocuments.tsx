@@ -62,11 +62,11 @@ export const RequestDocuments: React.FC = () => {
 
   return (
     <div className="p-6">
-      <h2 className="text-xl font-semibold mb-4">Judicial Document Request</h2>
-      <p className="text-sm text-gray-600 mb-4">This request does not imply court submission</p>
+      <h2 className="text-2xl font-bold text-navy-900 mb-2">Judicial Document Request</h2>
+      <p className="text-sm text-navy-700 mb-6">This request does not imply court submission</p>
 
       <Card className="mb-6">
-        <div className="space-y-3">
+        <div className="space-y-4">
           <Select
             label="Select Case"
             value={caseId}
@@ -93,21 +93,21 @@ export const RequestDocuments: React.FC = () => {
         </div>
       </Card>
 
-      <h3 className="text-lg font-medium mb-2">My Requests</h3>
+      <h3 className="text-xl font-bold text-navy-900 mb-4">My Requests</h3>
       <Card>
-        <div className="space-y-2">
-          {requests.length === 0 && <div>No requests yet</div>}
+        <div className="space-y-3">
+          {requests.length === 0 && <div className="text-center py-8 text-gray-600">No requests yet</div>}
           {requests.map((r) => (
-            <div key={r.id} className="flex justify-between items-center">
+            <div key={r.id} className="flex justify-between items-center p-4 bg-gradient-to-r from-gray-50 to-slate-50 rounded-xl border border-gray-200">
               <div>
-                <div className="font-medium">{r.documentType}</div>
-                <div className="text-sm text-gray-600">{r.requestReason}</div>
+                <div className="font-semibold text-navy-900">{r.documentType}</div>
+                <div className="text-sm text-navy-700">{r.requestReason}</div>
               </div>
               <div className="text-sm flex items-center space-x-3">
                 <Button variant="ghost" onClick={() => window.open(`/police/cases/${r.caseId}`, '_blank')}>View Case</Button>
-                <span className="px-2 py-1 bg-gray-100 rounded">{r.status}</span>
+                <span className="px-3 py-1 bg-gradient-to-r from-navy-50 to-blue-50 text-navy-900 rounded-full font-medium text-xs uppercase tracking-wide">{r.status}</span>
                 {r.status === 'ISSUED' && (
-                  <a href={r.issuedFileUrl || undefined} className="ml-3 text-blue-600" target="_blank" rel="noreferrer">Download</a>
+                  <a href={r.issuedFileUrl || undefined} className="ml-3 text-navy-700 hover:text-navy-900 font-medium transition-colors" target="_blank" rel="noreferrer">Download</a>
                 )}
               </div>
             </div>
