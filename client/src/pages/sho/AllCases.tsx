@@ -160,33 +160,33 @@ export const SHOAllCases: React.FC = () => {
           />
         ) : (
           <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
+            <table>
+              <thead>
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                  <th>
                     FIR Number
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                  <th>
                     Sections
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                  <th>
                     State
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                  <th>
                     Assigned To
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                  <th>
                     Progress
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                  <th>
                     Created
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                  <th>
                     Action
                   </th>
                 </tr>
               </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
+              <tbody>
                 {filteredCases.map((c) => {
                   const state = c.state?.currentState || 'UNKNOWN';
                   const activeAssignment = c.assignments?.find((a) => !a.unassignedAt);
@@ -196,47 +196,46 @@ export const SHOAllCases: React.FC = () => {
                   return (
                     <tr
                       key={c.id}
-                      className="hover:bg-gray-50 cursor-pointer transition-colors"
                       onClick={() => navigate(`/sho/cases/${c.id}`)}
                     >
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span className="font-medium text-blue-600">
+                      <td>
+                        <span className="font-medium text-navy-700">
                           {c.fir?.firNumber || c.id.slice(0, 8)}
                         </span>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm">
+                      <td>
                         {c.fir?.sectionsApplied || '-'}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
+                      <td>
                         <Badge variant={getCaseStateBadgeVariant(state)}>
                           {getCaseStateLabel(state)}
                         </Badge>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm">
+                      <td>
                         {activeAssignment ? (
-                          <span className="text-gray-900">{activeAssignment.assignedUser?.name}</span>
+                          <span className="text-navy-900">{activeAssignment.assignedUser?.name}</span>
                         ) : (
                           <span className="text-red-600 font-medium">Unassigned</span>
                         )}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm">
+                      <td>
                         <div className="flex items-center gap-2">
                           {evidenceCount > 0 && (
-                            <span className="text-xs bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full">
+                            <span className="text-xs bg-gradient-to-r from-blue-50 to-indigo-50 text-navy-900 px-2 py-0.5 rounded-full font-medium">
                               {evidenceCount} Evidence
                             </span>
                           )}
                           {witnessCount > 0 && (
-                            <span className="text-xs bg-green-100 text-green-800 px-2 py-0.5 rounded-full">
+                            <span className="text-xs bg-gradient-to-r from-green-50 to-emerald-50 text-navy-900 px-2 py-0.5 rounded-full font-medium">
                               {witnessCount} Witness
                             </span>
                           )}
                         </div>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      <td>
                         {new Date(c.createdAt).toLocaleDateString('en-IN')}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
+                      <td>
                         <Button
                           variant="secondary"
                           size="sm"
