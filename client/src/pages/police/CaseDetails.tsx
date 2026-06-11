@@ -291,33 +291,33 @@ export const PoliceCaseDetails: React.FC = () => {
       <div className="space-y-6">
         {/* Assignment Status Banner */}
         {!isAssignedToMe && (
-          <div className="bg-yellow-50 border border-yellow-300 rounded-lg p-4">
-            <p className="text-yellow-800 font-medium">
+          <div className="bg-gradient-to-r from-yellow-50 to-orange-50 border border-yellow-200 rounded-2xl p-5 backdrop-blur-sm">
+            <p className="text-navy-900 font-bold">
               ⚠️ You are viewing this case in read-only mode
             </p>
-            <p className="text-yellow-600 text-sm mt-1">
+            <p className="text-navy-700 text-sm mt-2">
               You are not currently assigned to this case. Contact your SHO for assignment.
             </p>
           </div>
         )}
 
         {isAssignedToMe && !canEdit && (
-          <div className="bg-gray-50 border border-gray-300 rounded-lg p-4">
-            <p className="text-gray-800 font-medium">
+          <div className="bg-gradient-to-r from-gray-50 to-slate-50 border border-gray-200 rounded-2xl p-5 backdrop-blur-sm">
+            <p className="text-navy-900 font-bold">
               📋 Case is locked for editing
             </p>
-            <p className="text-gray-600 text-sm mt-1">
+            <p className="text-navy-700 text-sm mt-2">
               Current state: {currentState.replace(/_/g, ' ')}. Editing is not allowed in this state.
             </p>
           </div>
         )}
 
         {canEdit && (
-          <div className="bg-green-50 border border-green-300 rounded-lg p-4">
-            <p className="text-green-800 font-medium">
+          <div className="bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-2xl p-5 backdrop-blur-sm">
+            <p className="text-navy-900 font-bold">
               ✓ You are assigned to this case
             </p>
-            <p className="text-green-600 text-sm mt-1">
+            <p className="text-navy-700 text-sm mt-2">
               You can add evidence, witnesses, and accused to this case.
             </p>
           </div>
@@ -680,29 +680,29 @@ export const PoliceCaseDetails: React.FC = () => {
         {/* Investigation Summary */}
         <Card title="Investigation Summary">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-            <div className="p-4 bg-blue-50 rounded-lg">
-              <p className="text-2xl font-bold text-blue-600">
+            <div className="dashboard-stat-card">
+              <p className="dashboard-stat-number">
                 {caseData.evidence?.length || 0}
               </p>
-              <p className="text-sm text-gray-600">Evidence</p>
+              <p className="dashboard-stat-label">Evidence</p>
             </div>
-            <div className="p-4 bg-green-50 rounded-lg">
-              <p className="text-2xl font-bold text-green-600">
+            <div className="dashboard-stat-card">
+              <p className="dashboard-stat-number">
                 {caseData.witnesses?.length || 0}
               </p>
-              <p className="text-sm text-gray-600">Witnesses</p>
+              <p className="dashboard-stat-label">Witnesses</p>
             </div>
-            <div className="p-4 bg-orange-50 rounded-lg">
-              <p className="text-2xl font-bold text-orange-600">
+            <div className="dashboard-stat-card">
+              <p className="dashboard-stat-number">
                 {caseData.accused?.length || 0}
               </p>
-              <p className="text-sm text-gray-600">Accused</p>
+              <p className="dashboard-stat-label">Accused</p>
             </div>
-            <div className="p-4 bg-purple-50 rounded-lg">
-              <p className="text-2xl font-bold text-purple-600">
+            <div className="dashboard-stat-card">
+              <p className="dashboard-stat-number">
                 {caseData.documents?.length || 0}
               </p>
-              <p className="text-sm text-gray-600">Documents</p>
+              <p className="dashboard-stat-label">Documents</p>
             </div>
           </div>
         </Card>
@@ -710,12 +710,12 @@ export const PoliceCaseDetails: React.FC = () => {
         {/* Evidence List */}
         {caseData.evidence && caseData.evidence.length > 0 && (
           <Card title="Evidence">
-            <div className="space-y-2">
+            <div className="space-y-3">
               {caseData.evidence.map((ev) => (
-                <div key={ev.id} className="flex items-center justify-between p-3 border rounded-lg">
+                <div key={ev.id} className="flex items-center justify-between p-4 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl border border-blue-200">
                   <div>
                     <Badge variant="info">{ev.category}</Badge>
-                    <p className="text-xs text-gray-400">
+                    <p className="text-xs text-navy-600 mt-1">
                       Uploaded: {new Date(ev.uploadedAt).toLocaleDateString()}
                     </p>
                   </div>
@@ -724,7 +724,7 @@ export const PoliceCaseDetails: React.FC = () => {
                       href={ev.fileUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-blue-600 hover:underline text-sm"
+                      className="text-navy-700 hover:text-navy-900 font-medium text-sm transition-colors"
                     >
                       View →
                     </a>
@@ -738,17 +738,17 @@ export const PoliceCaseDetails: React.FC = () => {
         {/* Witnesses List */}
         {caseData.witnesses && caseData.witnesses.length > 0 && (
           <Card title="Witnesses">
-            <div className="space-y-2">
+            <div className="space-y-3">
               {caseData.witnesses.map((w) => (
-                <div key={w.id} className="p-3 border rounded-lg">
-                  <p className="font-medium">{w.name}</p>
-                  {w.contact && <p className="text-sm text-gray-500">📞 {w.contact}</p>}
-                  {w.address && <p className="text-sm text-gray-500">📍 {w.address}</p>}
+                <div key={w.id} className="p-4 bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl border border-green-200">
+                  <p className="font-bold text-navy-900">{w.name}</p>
+                  {w.contact && <p className="text-sm text-navy-700 mt-1">📞 {w.contact}</p>}
+                  {w.address && <p className="text-sm text-navy-700">📍 {w.address}</p>}
                   {w.statementFileUrl && (
                     w.statementFileUrl.startsWith('http') ? (
-                      <a href={w.statementFileUrl} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline text-sm">View Statement →</a>
+                      <a href={w.statementFileUrl} target="_blank" rel="noopener noreferrer" className="text-navy-700 hover:text-navy-900 font-medium text-sm transition-colors">View Statement →</a>
                     ) : (
-                      <p className="text-sm text-gray-600 mt-2 italic">"{w.statementFileUrl}"</p>
+                      <p className="text-sm text-navy-700 mt-2 italic">"{w.statementFileUrl}"</p>
                     )
                   )}
                 </div>
@@ -760,12 +760,12 @@ export const PoliceCaseDetails: React.FC = () => {
         {/* Accused List */}
         {caseData.accused && caseData.accused.length > 0 && (
           <Card title="Accused">
-            <div className="space-y-2">
+            <div className="space-y-3">
               {caseData.accused.map((a) => (
-                <div key={a.id} className="flex items-center justify-between p-3 border rounded-lg">
+                <div key={a.id} className="flex items-center justify-between p-4 bg-gradient-to-r from-orange-50 to-amber-50 rounded-xl border border-orange-200">
                   <div>
-                    <p className="font-medium">{a.name}</p>
-                    {a.address && <p className="text-sm text-gray-500">📍 {a.address}</p>}
+                    <p className="font-bold text-navy-900">{a.name}</p>
+                    {a.address && <p className="text-sm text-navy-700 mt-1">📍 {a.address}</p>}
                   </div>
                   <Badge
                     variant={
@@ -783,20 +783,20 @@ export const PoliceCaseDetails: React.FC = () => {
 
         {/* Document Requests for this case */}
         <Card title="Document Requests">
-          {requestsLoading && <div>Loading requests...</div>}
-          {!requestsLoading && caseRequests.length === 0 && <div>No document requests for this case</div>}
-          <div className="space-y-2">
+          {requestsLoading && <div className="text-center py-4 text-navy-700">Loading requests...</div>}
+          {!requestsLoading && caseRequests.length === 0 && <div className="text-center py-8 text-navy-700">No document requests for this case</div>}
+          <div className="space-y-3">
             {caseRequests.map((r) => (
-              <div key={r.id} className="flex justify-between items-center py-2 border-b">
+              <div key={r.id} className="flex justify-between items-center p-4 bg-gradient-to-r from-gray-50 to-slate-50 rounded-xl border border-gray-200">
                 <div>
-                  <div className="font-medium">{r.documentType}</div>
-                  <div className="text-sm text-gray-600">{r.requestReason} — Requested by {r.requester?.name}</div>
-                  {r.remarks && <div className="text-sm text-gray-500">Remarks: {r.remarks}</div>}
+                  <div className="font-bold text-navy-900">{r.documentType}</div>
+                  <div className="text-sm text-navy-700">{r.requestReason} — Requested by {r.requester?.name}</div>
+                  {r.remarks && <div className="text-sm text-navy-600">Remarks: {r.remarks}</div>}
                 </div>
                 <div className="text-sm">
-                  <span className="px-2 py-1 bg-gray-100 rounded">{r.status}</span>
+                  <span className="px-3 py-1 bg-gradient-to-r from-navy-50 to-blue-50 text-navy-900 rounded-full font-medium text-xs uppercase tracking-wide">{r.status}</span>
                   {r.status === 'ISSUED' && (
-                    <a href={r.issuedFileUrl || undefined} className="ml-3 text-blue-600" target="_blank" rel="noreferrer">Download</a>
+                    <a href={r.issuedFileUrl || undefined} className="ml-3 text-navy-700 hover:text-navy-900 font-medium transition-colors" target="_blank" rel="noreferrer">Download</a>
                   )}
                 </div>
               </div>
