@@ -148,55 +148,54 @@ export const PoliceMyCases: React.FC = () => {
           />
         ) : (
           <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
+            <table>
+              <thead>
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th>
                     FIR Number
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th>
                     Sections
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th>
                     State
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th>
                     Created
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th>
                     Evidence
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th>
                     Action
                   </th>
                 </tr>
               </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
+              <tbody>
                 {filteredCases.map((c) => {
                   const state = c.state?.currentState || 'UNKNOWN';
                   return (
                     <tr
                       key={c.id}
-                      className="hover:bg-gray-50 cursor-pointer transition-colors"
                       onClick={() => navigate(`/police/cases/${c.id}`)}
                     >
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span className="font-medium text-blue-600">
+                      <td>
+                        <span className="font-medium text-navy-700">
                           {c.fir?.firNumber || c.id.slice(0, 8)}
                         </span>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                      <td>
                         {c.fir?.sectionsApplied || '-'}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
+                      <td>
                         <Badge variant={getCaseStateBadgeVariant(state)}>
                           {getCaseStateLabel(state)}
                         </Badge>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      <td>
                         {new Date(c.createdAt).toLocaleDateString('en-IN')}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      <td>
                         {c.evidence && c.evidence.length > 0 ? (
                           <span className="flex items-center gap-1 text-green-600">
                             <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
@@ -212,7 +211,7 @@ export const PoliceMyCases: React.FC = () => {
                           <span className="text-gray-400">-</span>
                         )}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
+                      <td>
                         <Button
                           variant="secondary"
                           size="sm"
