@@ -81,9 +81,9 @@ export const AISearchWidget: React.FC = () => {
   };
 
   return (
-    <div className="rounded-lg border border-gray-200 shadow-sm overflow-hidden">
-      <div className="bg-gradient-to-r from-blue-50 via-purple-50 to-blue-50 p-4 border-b">
-        <h3 className="text-lg font-semibold flex items-center gap-2">
+    <div className="rounded-2xl border-2 border-gray-200 shadow-sm overflow-hidden">
+      <div className="bg-gradient-to-r from-blue-50 via-purple-50 to-blue-50 p-5 border-b backdrop-blur-sm">
+        <h3 className="text-lg font-bold text-navy-900 flex items-center gap-2">
           🔍 AI Case Similarity & Knowledge Search
           <Badge variant="info">
             Insight Assist — Read-only, does not modify case records
@@ -147,33 +147,33 @@ export const AISearchWidget: React.FC = () => {
 
         <div className="mt-4 space-y-3">
           {results.length === 0 && !isLoading && (
-            <p className="text-sm text-gray-500">
+            <p className="text-sm text-navy-700">
               No matching records were found in the AI knowledge index.
               Try searching using an IPC section, accused name, location, or case description.
             </p>
           )}
 
           {results.map((r, idx) => (
-            <div key={`${r.caseId}-${idx}`} className="border rounded-lg p-3 bg-gray-50">
+            <div key={`${r.caseId}-${idx}`} className="border border-gray-200 rounded-xl p-4 bg-gradient-to-r from-gray-50 to-slate-50">
               <div className="flex justify-between items-start gap-3">
                 <div className="space-y-1">
 
                   <div className="flex items-center gap-2 flex-wrap">
-                    <p className="font-semibold">
+                    <p className="font-bold text-navy-900">
                       Case: {r.caseId || 'Unknown'}
                     </p>
 
                     {extractSections(r.snippet).map(sec => (
                       <span
                         key={sec}
-                        className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-100 text-blue-800"
+                        className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gradient-to-r from-blue-50 to-indigo-50 text-navy-900 border border-blue-200"
                       >
                         {sec}
                       </span>
                     ))}
                   </div>
 
-                  <p className="text-xs text-gray-500">
+                  <p className="text-xs text-navy-600">
                     Source: {r.sourceFile || 'N/A'}
                   </p>
                 </div>
@@ -197,14 +197,14 @@ export const AISearchWidget: React.FC = () => {
                 </div>
               </div>
 
-              <p className="text-sm text-gray-700 mt-2 whitespace-pre-wrap">
+              <p className="text-sm text-navy-700 mt-2 whitespace-pre-wrap">
                 {r.snippet || 'No preview text available'}
               </p>
             </div>
           ))}
         </div>
 
-        <div className="text-xs text-gray-500 mt-3">
+        <div className="text-xs text-navy-600 mt-3">
           Provides reference insights using the AI knowledge index.
           Does not modify case workflows, records, or system data.
         </div>
