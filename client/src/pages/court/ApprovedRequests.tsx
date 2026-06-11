@@ -40,15 +40,15 @@ export const ApprovedRequests: React.FC = () => {
 
   return (
     <div className="p-6">
-      <h2 className="text-xl font-semibold mb-4">Approved Document Requests</h2>
-      <p className="text-sm text-gray-600 mb-4">Upload signed PDF and issue document</p>
+      <h2 className="text-2xl font-bold text-navy-900 mb-2">Approved Document Requests</h2>
+      <p className="text-sm text-navy-700 mb-6">Upload signed PDF and issue document</p>
       <Card>
-        {requests.length === 0 && <div>No approved requests</div>}
+        {requests.length === 0 && <div className="text-center py-8 text-navy-700">No approved requests</div>}
         {requests.map((r) => (
-          <div key={r.id} className="flex justify-between items-center py-2 border-b">
+          <div key={r.id} className="flex justify-between items-center p-4 bg-gradient-to-r from-gray-50 to-slate-50 rounded-xl border border-gray-200 mb-3 last:mb-0">
             <div>
-              <div className="font-medium">{r.documentType} — Case {r.caseId}</div>
-              <div className="text-sm text-gray-600">{r.requestReason} — Requested by {r.requester?.name}</div>
+              <div className="font-bold text-navy-900">{r.documentType} — Case {r.caseId}</div>
+              <div className="text-sm text-navy-700">{r.requestReason} — Requested by {r.requester?.name}</div>
             </div>
             <div className="space-x-2">
               <Button variant="ghost" onClick={() => {
