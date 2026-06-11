@@ -322,29 +322,29 @@ export const JudgeCaseDetails: React.FC = () => {
         {/* Case Summary */}
         <Card title="Case Summary">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-            <div className="p-4 bg-blue-50 rounded-lg">
-              <p className="text-2xl font-bold text-blue-600">
+            <div className="dashboard-stat-card">
+              <p className="dashboard-stat-number">
                 {caseData.evidence?.length || 0}
               </p>
-              <p className="text-sm text-gray-600">Evidence Items</p>
+              <p className="dashboard-stat-label">Evidence Items</p>
             </div>
-            <div className="p-4 bg-green-50 rounded-lg">
-              <p className="text-2xl font-bold text-green-600">
+            <div className="dashboard-stat-card">
+              <p className="dashboard-stat-number">
                 {caseData.witnesses?.length || 0}
               </p>
-              <p className="text-sm text-gray-600">Witnesses</p>
+              <p className="dashboard-stat-label">Witnesses</p>
             </div>
-            <div className="p-4 bg-orange-50 rounded-lg">
-              <p className="text-2xl font-bold text-orange-600">
+            <div className="dashboard-stat-card">
+              <p className="dashboard-stat-number">
                 {caseData.accused?.length || 0}
               </p>
-              <p className="text-sm text-gray-600">Accused</p>
+              <p className="dashboard-stat-label">Accused</p>
             </div>
-            <div className="p-4 bg-purple-50 rounded-lg">
-              <p className="text-2xl font-bold text-purple-600">
+            <div className="dashboard-stat-card">
+              <p className="dashboard-stat-number">
                 {courtActions.length}
               </p>
-              <p className="text-sm text-gray-600">Court Actions</p>
+              <p className="dashboard-stat-label">Court Actions</p>
             </div>
           </div>
         </Card>
@@ -434,11 +434,11 @@ export const JudgeCaseDetails: React.FC = () => {
         {/* Case Disposed */}
         {currentState === CaseState.DISPOSED && (
           <Card>
-            <div className="bg-green-50 border border-green-200 rounded-lg p-4 text-center">
-              <p className="text-green-800 font-medium text-lg">
+            <div className="bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-2xl p-5 text-center backdrop-blur-sm">
+              <p className="text-navy-900 font-bold text-lg">
                 ✓ Case Disposed
               </p>
-              <p className="text-green-600 mt-1">
+              <p className="text-navy-700 mt-2">
                 This case has been concluded
               </p>
             </div>
@@ -457,14 +457,14 @@ export const JudgeCaseDetails: React.FC = () => {
               {courtActions.map((action) => (
                 <div
                   key={action.id}
-                  className="p-4 border rounded-lg bg-gray-50"
+                  className="p-4 bg-gradient-to-r from-gray-50 to-slate-50 rounded-xl border border-gray-200"
                 >
                   <div className="flex justify-between items-start">
                     <div>
-                      <p className="font-medium">
+                      <p className="font-bold text-navy-900">
                         {action.actionType.replace(/_/g, ' ')}
                       </p>
-                      <p className="text-sm text-gray-600 mt-1">
+                      <p className="text-sm text-navy-700 mt-1">
                         Date: {new Date(action.actionDate).toLocaleDateString('en-IN')}
                       </p>
                       {action.orderFileUrl && (
@@ -472,7 +472,7 @@ export const JudgeCaseDetails: React.FC = () => {
                           href={action.orderFileUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-sm text-blue-600 hover:underline mt-1 block"
+                          className="text-sm text-navy-700 hover:text-navy-900 hover:underline mt-1 block transition-colors"
                         >
                           View Order Document →
                         </a>
