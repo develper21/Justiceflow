@@ -82,23 +82,21 @@ export const JudgeDashboard: React.FC = () => {
       {/* Stats Cards */}
       <div className="stats-grid">
         <div className="dashboard-stat-card">
-          <div className="dashboard-stat-number" style={{ color: '#1B4F72' }}>{courtAcceptedCases.length}</div>
+          <div className="dashboard-stat-number">{courtAcceptedCases.length}</div>
           <div className="dashboard-stat-label">Ready for Trial</div>
         </div>
         <div className="dashboard-stat-card">
-          <div className="dashboard-stat-number" style={{ color: '#FF8C00' }}>{trialCases.length}</div>
+          <div className="dashboard-stat-number">{trialCases.length}</div>
           <div className="dashboard-stat-label">Trial Ongoing</div>
         </div>
         <div className="dashboard-stat-card">
-          <div className="dashboard-stat-number" style={{ color: '#5D6D7E' }}>{judgmentReservedCases.length}</div>
+          <div className="dashboard-stat-number">{judgmentReservedCases.length}</div>
           <div className="dashboard-stat-label">Judgment Reserved</div>
         </div>
-        <Card>
-          <div className="text-center">
-            <p className="text-3xl font-bold text-green-600">{disposedCases.length}</p>
-            <p className="text-sm text-gray-600 mt-2">Disposed</p>
-          </div>
-        </Card>
+        <div className="dashboard-stat-card">
+          <div className="dashboard-stat-number">{disposedCases.length}</div>
+          <div className="dashboard-stat-label">Disposed</div>
+        </div>
       </div>
 
       {/* Cases Needing Action (Court Accepted - need to start trial) */}
