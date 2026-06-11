@@ -14,7 +14,7 @@ export const Input: React.FC<InputProps> = ({
   ...props
 }) => {
   return (
-    <div className={wrapperClassName ? wrapperClassName : 'mb-4'}>
+    <div className={wrapperClassName ? wrapperClassName : 'mb-5'}>
       {label && (
         <label className="label">
           {label}
@@ -22,11 +22,11 @@ export const Input: React.FC<InputProps> = ({
         </label>
       )}
       <input
-        className={`input ${error ? 'border-red-500 focus:ring-red-500' : ''} ${className}`}
+        className={`input ${error ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : ''} ${className}`}
         {...props}
       />
       {error && (
-        <p className="mt-1 text-sm text-red-600">{error}</p>
+        <p className="mt-2 text-sm text-red-600 font-medium">{error}</p>
       )}
     </div>
   );
