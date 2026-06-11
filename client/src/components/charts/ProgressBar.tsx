@@ -9,11 +9,11 @@ interface ProgressBarProps {
 }
 
 const colorClasses = {
-    blue: 'bg-blue-600',
-    green: 'bg-green-600',
-    yellow: 'bg-yellow-600',
-    red: 'bg-red-600',
-    purple: 'bg-purple-600',
+    blue: 'bg-gradient-to-r from-blue-600 to-blue-700',
+    green: 'bg-gradient-to-r from-green-600 to-green-700',
+    yellow: 'bg-gradient-to-r from-yellow-600 to-yellow-700',
+    red: 'bg-gradient-to-r from-red-600 to-red-700',
+    purple: 'bg-gradient-to-r from-purple-600 to-purple-700',
 };
 
 export const ProgressBar: React.FC<ProgressBarProps> = ({
@@ -28,14 +28,14 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({
     return (
         <div className="mb-4">
             <div className="flex justify-between items-center mb-2">
-                <span className="text-sm font-medium text-gray-700">{label}</span>
+                <span className="text-sm font-bold text-navy-900">{label}</span>
                 {showPercentage && (
-                    <span className="text-sm text-gray-600">
+                    <span className="text-sm text-navy-700">
                         {value} / {max} ({percentage.toFixed(0)}%)
                     </span>
                 )}
             </div>
-            <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
+            <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden shadow-inner">
                 <div
                     className={`h-full ${colorClasses[color]} transition-all duration-500 ease-out rounded-full`}
                     style={{ width: `${percentage}%` }}
