@@ -63,19 +63,19 @@ export const CourtDashboard: React.FC = () => {
       {/* Stats Cards */}
       <div className="stats-grid">
         <div className="dashboard-stat-card">
-          <div className="dashboard-stat-number" style={{ color: '#FF8C00' }}>{incomingCases.length}</div>
+          <div className="dashboard-stat-number">{incomingCases.length}</div>
           <div className="dashboard-stat-label">Pending Intake</div>
         </div>
         <div className="dashboard-stat-card">
-          <div className="dashboard-stat-number" style={{ color: '#006400' }}>{acceptedCases.length}</div>
+          <div className="dashboard-stat-number">{acceptedCases.length}</div>
           <div className="dashboard-stat-label">Accepted</div>
         </div>
         <div className="dashboard-stat-card">
-          <div className="dashboard-stat-number" style={{ color: '#1B4F72' }}>{trialCases.length}</div>
+          <div className="dashboard-stat-number">{trialCases.length}</div>
           <div className="dashboard-stat-label">In Trial</div>
         </div>
         <div className="dashboard-stat-card">
-          <div className="dashboard-stat-number" style={{ color: '#5D6D7E' }}>{cases.length}</div>
+          <div className="dashboard-stat-number">{cases.length}</div>
           <div className="dashboard-stat-label">Total Cases</div>
         </div>
       </div>
@@ -109,7 +109,7 @@ export const CourtDashboard: React.FC = () => {
             {incomingCases.length > 5 && (
               <Link
                 to="/court/incoming-cases"
-                className="block text-center text-blue-600 hover:underline font-medium"
+                className="block text-center text-navy-700 hover:text-navy-900 font-medium hover:underline transition-colors"
               >
                 View All {incomingCases.length} Incoming Cases →
               </Link>
