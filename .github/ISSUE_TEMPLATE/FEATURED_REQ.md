@@ -32,6 +32,7 @@ assignees: ''
 <!-- Main scenario -->
 
 ### Additional Use Cases
+
 - Use case 1
 - Use case 2
 

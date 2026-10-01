@@ -32,12 +32,14 @@ assignees: ''
 ## Environment
 
 ### System Information
+
 - **OS**: [e.g., Windows 11, macOS 14, Ubuntu 22.04]
 - **Browser**: [e.g., Chrome 120, Firefox 121]
 - **Node Version**: [e.g., 18.17.0]
 - **Database**: [e.g., PostgreSQL 14.5]
 
 ### Application Information
+
 - **User Role**: [Police Officer / SHO / Court Clerk / Judge]
 - **Module**: [e.g., Case Management, FIR Registration]
 - **Version**: [e.g., 1.0.0]
@@ -46,9 +48,9 @@ assignees: ''
 
 <!-- Include any error messages, console logs, or stack traces -->
 
-```
+txt```
 Paste error messages here
-```
+txt```
 
 ## Additional Context
 
