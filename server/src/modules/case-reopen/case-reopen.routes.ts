@@ -5,17 +5,17 @@ import { requestReopen, getMyRequests, getPendingForJudge, approveRequest, rejec
 
 const router = Router();
 
-// Police - create request
-router.post('/api/cases/:caseId/reopen-request', authenticate, isPolice, createValidator, requestReopen);
+// Police - create request (router is mounted at /api, so paths must not repeat the prefix)
+router.post('/cases/:caseId/reopen-request', authenticate, isPolice, createValidator, requestReopen);
 
 // Police - my requests
-router.get('/api/case-reopen/my-requests', authenticate, isPolice, getMyRequests);
+router.get('/case-reopen/my-requests', authenticate, isPolice, getMyRequests);
 
 // Judge - pending
-router.get('/api/case-reopen/pending', authenticate, isJudge, getPendingForJudge);
+router.get('/case-reopen/pending', authenticate, isJudge, getPendingForJudge);
 
 // Judge - approve/reject
-router.post('/api/case-reopen/:id/approve', authenticate, isJudge, approveValidator, approveRequest);
-router.post('/api/case-reopen/:id/reject', authenticate, isJudge, rejectValidator, rejectRequest);
+router.post('/case-reopen/:id/approve', authenticate, isJudge, approveValidator, approveRequest);
+router.post('/case-reopen/:id/reject', authenticate, isJudge, rejectValidator, rejectRequest);
 
 export default router;

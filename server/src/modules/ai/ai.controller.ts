@@ -39,8 +39,8 @@ export const proxyOcrExtract = asyncHandler(async (req: Request, res: Response) 
 
 export const proxyGenerateDraft = asyncHandler(async (req: Request, res: Response) => {
   const { caseId, documentType, context } = req.body;
-  if (!documentType) return res.status(400).json({ success: false, error: 'documentType is required' });
-  const result = await aiService.generateDraft({ caseId, documentType, context });
+  if (!documentType) return res.status(400).json({ success: false, error: 'documentType is required' });    const result = await aiService.generateDraft({ caseId, documentType, context });
+    res.status(200).json({ success: true, data: result });
 });
 
 import { getAnalyticsData } from '../analytics/analytics.controller';
