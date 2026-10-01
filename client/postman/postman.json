@@ -1,0 +1,1463 @@
+{
+  "info": {
+    "_postman_id": "c9d4e5a2-8f3b-4a7c-9d2e-1b6f7a8c9d0e",
+    "name": "JusticeFlow API — Frontend (Client Calls)",
+    "description": "Postman collection mirroring **exactly** the API calls made by the JusticeFlow React frontend (`client/src/api/*`).\n\nUse it to test the backend from the frontend's point of view — same base URL config (`VITE_API_URL`), same paths, same payloads the UI sends.\n\n## Structure (mirrors client/src/api)\n| Frontend module | Folder in this collection |\n|---|---|\n| auth.api.ts | Auth |\n| organization.api.ts / court.api.ts (orgs) | Organizations |\n| fir.api.ts | FIR |\n| case.api.ts | Cases |\n| investigation.api.ts | Investigation |\n| document.api.ts | Documents |\n| court.api.ts | Court |\n| bail.api.ts | Bail |\n| timeline.api.ts (audit) | Audit Logs |\n| documentRequests.api.ts | Document Requests |\n| timeline.api.ts | Timeline |\n| search.api.ts | Search |\n| closureReport.api.ts | Closure Report |\n| caseReopen.api.ts | Case Reopen |\n| ai.api.ts | AI Features |\n| aiEnhanced.api.ts | AI Enhanced |\n\n## Setup\n1. Server: `cd server && npm run dev` → `http://localhost:5000` (matches `VITE_API_URL=http://localhost:5000/api`)\n2. Seed demo data: `npm run db:seed`\n3. Run **Auth → Login (Officer)** — token auto-saves to `{{token}}` (same as the app storing it in localStorage).\n\n## Demo Accounts\n| Role | Email | Password |\n|---|---|---|\n| POLICE | officer1@police.gov | password123 |\n| SHO | sho.central@police.gov | password123 |\n| COURT_CLERK | clerk@court.gov | password123 |\n| JUDGE | judge@court.gov | password123 |",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Auth — auth.api.ts",
+      "item": [
+        {
+          "name": "Login (authApi.login)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status 200', () => pm.response.to.have.status(200));",
+                  "const body = pm.response.json();",
+                  "if (body.data && body.data.token) {",
+                  "  pm.collectionVariables.set('token', body.data.token);",
+                  "  pm.collectionVariables.set('userId', body.data.user.id);",
+                  "  pm.collectionVariables.set('officerId', body.data.user.id);",
+                  "  console.log('token saved (same as localStorage.setItem in the app)');",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"officer1@police.gov\",\n  \"password\": \"password123\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "login"]
+            },
+            "description": "`POST /auth/login` — the exact call from `authApi.login`. App saves token to localStorage; here it's saved to `{{token}}`."
+          },
+          "response": []
+        },
+        {
+          "name": "Login as SHO / Clerk / Judge",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status 200', () => pm.response.to.have.status(200));",
+                  "const body = pm.response.json();",
+                  "if (body.data && body.data.token) {",
+                  "  pm.collectionVariables.set('token', body.data.token);",
+                  "  console.log('Role:', body.data.user.role);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"sho.central@police.gov\",\n  \"password\": \"password123\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "login"]
+            },
+            "description": "Switch role by editing email: sho.central@police.gov (SHO), clerk@court.gov (COURT_CLERK), judge@court.gov (JUDGE). Password: password123."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Current User (authApi.getCurrentUser)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/auth/me",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "me"]
+            },
+            "description": "`GET /auth/me` — `authApi.getCurrentUser`."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Organizations — organization.api.ts",
+      "item": [
+        {
+          "name": "Get Police Stations (getPoliceStations)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/police-stations",
+              "host": ["{{baseUrl}}"],
+              "path": ["police-stations"]
+            },
+            "description": "`GET /police-stations` — used on login pages and SHO dashboards. Save a station id to `{{stationId}}`."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Courts (getCourts)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/courts",
+              "host": ["{{baseUrl}}"]
+            },
+            "description": "`GET /courts` — used by SHO submit-to-court form. Save a court id to `{{courtId}}`."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Officers (getOfficers — SHO)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/officers",
+              "host": ["{{baseUrl}}"]
+            },
+            "description": "`GET /officers` — `organizationApi.getOfficers`, SHO only. Save an officer id to `{{officerId}}` for assignment."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "FIR — fir.api.ts",
+      "item": [
+        {
+          "name": "Create FIR (firApi.createFIR)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status 201', () => pm.response.to.have.status(201));",
+                  "const body = pm.response.json();",
+                  "if (body.data && body.data.id) pm.collectionVariables.set('firId', body.data.id);",
+                  "if (body.data && body.data.caseId) pm.collectionVariables.set('caseId', body.data.caseId);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "incidentDate", "value": "2026-01-15", "type": "text" },
+                { "key": "sectionsApplied", "value": "IPC 379", "type": "text" },
+                { "key": "file", "type": "file", "src": [] }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/firs",
+              "host": ["{{baseUrl}}"],
+              "path": ["firs"]
+            },
+            "description": "`POST /firs` — `firApi.createFIR`: multipart with incidentDate + sectionsApplied (required) and optional file. Auto-creates the linked Case; saves `firId` and `caseId`."
+          },
+          "response": []
+        },
+        {
+          "name": "Get FIR By ID (firApi.getFIRById)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/firs/{{firId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["firs", "{{firId}}"]
+            },
+            "description": "`GET /firs/:firId` — `firApi.getFIRById`."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Cases — case.api.ts",
+      "item": [
+        {
+          "name": "My Cases (caseApi.getMyCases)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/cases/my",
+              "host": ["{{baseUrl}}"],
+              "path": ["cases", "my"]
+            },
+            "description": "`GET /cases/my` — `caseApi.getMyCases` (POLICE). Returns { cases, pagination }."
+          },
+          "response": []
+        },
+        {
+          "name": "All Cases (caseApi.getAllCases / getCases)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const body = pm.response.json();",
+                  "if (body.data && body.data.cases && body.data.cases.length > 0 && !pm.collectionVariables.get('caseId')) {",
+                  "  pm.collectionVariables.set('caseId', body.data.cases[0].id);",
+                  "  console.log('caseId saved:', body.data.cases[0].id);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/cases/all?page=1&limit=20",
+              "host": ["{{baseUrl}}"],
+              "path": ["cases", "all"],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "limit", "value": "20" }
+              ]
+            },
+            "description": "`GET /cases/all?page&limit` — `caseApi.getAllCases` / `caseApi.getCases` (SHO, COURT_CLERK, JUDGE). Saves first case id to `{{caseId}}`."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Case By ID (caseApi.getCaseById)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/cases/{{caseId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["cases", "{{caseId}}"]
+            },
+            "description": "`GET /cases/:caseId` — `caseApi.getCaseById`."
+          },
+          "response": []
+        },
+        {
+          "name": "Assign Case (caseApi.assignCase — SHO)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"officerId\": \"{{officerId}}\",\n  \"assignmentReason\": \"Assigned from SHO dashboard\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/cases/{{caseId}}/assign",
+              "host": ["{{baseUrl}}"],
+              "path": ["cases", "{{caseId}}", "assign"]
+            },
+            "description": "`POST /cases/:caseId/assign` — `caseApi.assignCase` (SHO)."
+          },
+          "response": []
+        },
+        {
+          "name": "Complete Investigation (caseApi.completeInvestigation)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/cases/{{caseId}}/complete-investigation",
+              "host": ["{{baseUrl}}"],
+              "path": ["cases", "{{caseId}}", "complete-investigation"]
+            },
+            "description": "`POST /cases/:caseId/complete-investigation` — `caseApi.completeInvestigation` (POLICE). No body."
+          },
+          "response": []
+        },
+        {
+          "name": "Archive Case (caseApi.archiveCase)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/cases/{{caseId}}/archive",
+              "host": ["{{baseUrl}}"],
+              "path": ["cases", "{{caseId}}", "archive"]
+            },
+            "description": "`POST /cases/:caseId/archive` — `caseApi.archiveCase` (SHO/JUDGE). No body."
+          },
+          "response": []
+        },
+        {
+          "name": "Judicial Close (caseApi.judicialCloseCase — Judge)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/cases/{{caseId}}/judicial-close",
+              "host": ["{{baseUrl}}"],
+              "path": ["cases", "{{caseId}}", "judicial-close"]
+            },
+            "description": "`POST /cases/:caseId/judicial-close` — `caseApi.judicialCloseCase` (JUDGE). No body."
+          },
+          "response": []
+        },
+        {
+          "name": "Can Close (caseApi.canCloseCase — Judge)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/cases/{{caseId}}/can-close",
+              "host": ["{{baseUrl}}"],
+              "path": ["cases", "{{caseId}}", "can-close"]
+            },
+            "description": "`GET /cases/:caseId/can-close` — `caseApi.canCloseCase` (JUDGE)."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Investigation — investigation.api.ts",
+      "item": [
+        {
+          "name": "Create Investigation Event",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"eventType\": \"SCENE_VISIT\",\n  \"eventDate\": \"2026-01-20\",\n  \"description\": \"Crime scene inspected\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/cases/{{caseId}}/investigation-events",
+              "host": ["{{baseUrl}}"],
+              "path": ["cases", "{{caseId}}", "investigation-events"]
+            },
+            "description": "`POST /cases/:caseId/investigation-events` — `investigationApi.createInvestigationEvent` (JSON body)."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Investigation Events",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/cases/{{caseId}}/investigation-events",
+              "host": ["{{baseUrl}}"],
+              "path": ["cases", "{{caseId}}", "investigation-events"]
+            },
+            "description": "`GET /cases/:caseId/investigation-events` — `investigationApi.getInvestigationEvents`."
+          },
+          "response": []
+        },
+        {
+          "name": "Create Evidence (multipart)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "category", "value": "PHOTO", "type": "text" },
+                { "key": "description", "value": "Scene photos", "type": "text" },
+                { "key": "collectedDate", "value": "2026-01-20", "type": "text" },
+                { "key": "collectedFrom", "value": "MG Road", "type": "text" },
+                { "key": "file", "type": "file", "src": [] }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/cases/{{caseId}}/evidence",
+              "host": ["{{baseUrl}}"],
+              "path": ["cases", "{{caseId}}", "evidence"]
+            },
+            "description": "`POST /cases/:caseId/evidence` — `investigationApi.createEvidence`: multipart with category + description (+ optional collectedDate, collectedFrom, file)."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Evidence",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/cases/{{caseId}}/evidence",
+              "host": ["{{baseUrl}}"],
+              "path": ["cases", "{{caseId}}", "evidence"]
+            },
+            "description": "`GET /cases/:caseId/evidence` — `investigationApi.getEvidence`."
+          },
+          "response": []
+        },
+        {
+          "name": "Create Witness (multipart)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "name", "value": "Ramesh Gupta", "type": "text" },
+                { "key": "contact", "value": "9876500011", "type": "text" },
+                { "key": "address", "value": "MG Road", "type": "text" },
+                { "key": "statement", "value": "Saw accused near scene at 9 PM", "type": "text" },
+                { "key": "statementFile", "type": "file", "src": [] }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/cases/{{caseId}}/witnesses",
+              "host": ["{{baseUrl}}"],
+              "path": ["cases", "{{caseId}}", "witnesses"]
+            },
+            "description": "`POST /cases/:caseId/witnesses` — `investigationApi.createWitness`: multipart with name + statement (+ contact, address, statementFile)."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Witnesses",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/cases/{{caseId}}/witnesses",
+              "host": ["{{baseUrl}}"],
+              "path": ["cases", "{{caseId}}", "witnesses"]
+            },
+            "description": "`GET /cases/:caseId/witnesses` — `investigationApi.getWitnesses`."
+          },
+          "response": []
+        },
+        {
+          "name": "Create Accused (JSON)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Vikram Singh\",\n  \"status\": \"ARRESTED\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/cases/{{caseId}}/accused",
+              "host": ["{{baseUrl}}"],
+              "path": ["cases", "{{caseId}}", "accused"]
+            },
+            "description": "`POST /cases/:caseId/accused` — `investigationApi.createAccused` (JSON body). Save `accusedId`."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Accused",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/cases/{{caseId}}/accused",
+              "host": ["{{baseUrl}}"],
+              "path": ["cases", "{{caseId}}", "accused"]
+            },
+            "description": "`GET /cases/:caseId/accused` — `investigationApi.getAccused`."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Documents — document.api.ts",
+      "item": [
+        {
+          "name": "Create Document (multipart)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "documentType", "value": "CHARGE_SHEET", "type": "text" },
+                { "key": "contentJson", "value": "{\"summary\":\"...\",\"sections\":\"IPC 379\"}", "type": "text" },
+                { "key": "document", "type": "file", "src": [] }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/cases/{{caseId}}/documents",
+              "host": ["{{baseUrl}}"],
+              "path": ["cases", "{{caseId}}", "documents"]
+            },
+            "description": "`POST /cases/:caseId/documents` — `documentApi.createDocument`: multipart with documentType + contentJson (stringified JSON) + optional file field named `document`."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Documents",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/cases/{{caseId}}/documents",
+              "host": ["{{baseUrl}}"],
+              "path": ["cases", "{{caseId}}", "documents"]
+            },
+            "description": "`GET /cases/:caseId/documents` — `documentApi.getDocuments`. Save a document id to `{{documentId}}`."
+          },
+          "response": []
+        },
+        {
+          "name": "Finalize Document",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/documents/{{documentId}}/finalize",
+              "host": ["{{baseUrl}}"],
+              "path": ["documents", "{{documentId}}", "finalize"]
+            },
+            "description": "`POST /documents/:documentId/finalize` — `documentApi.finalizeDocument`. No body."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Court — court.api.ts",
+      "item": [
+        {
+          "name": "Submit To Court (courtApi.submitToCourt — SHO)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"courtId\": \"{{courtId}}\",\n  \"remarks\": \"Submitted for trial\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/cases/{{caseId}}/submit-to-court",
+              "host": ["{{baseUrl}}"],
+              "path": ["cases", "{{caseId}}", "submit-to-court"]
+            },
+            "description": "`POST /cases/:caseId/submit-to-court` — `courtApi.submitToCourt` (SHO): courtId required."
+          },
+          "response": []
+        },
+        {
+          "name": "Intake (courtApi.intakeCase — Clerk)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"acknowledgementNumber\": \"ACK-2026-0001\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/cases/{{caseId}}/intake",
+              "host": ["{{baseUrl}}"],
+              "path": ["cases", "{{caseId}}", "intake"]
+            },
+            "description": "`POST /cases/:caseId/intake` — `courtApi.intakeCase` (COURT_CLERK): acknowledgementNumber optional."
+          },
+          "response": []
+        },
+        {
+          "name": "Create Court Action (courtApi.createCourtAction — Judge)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"actionType\": \"HEARING\",\n  \"actionDate\": \"2026-03-01\",\n  \"remarks\": \"First hearing scheduled\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/cases/{{caseId}}/court-actions",
+              "host": ["{{baseUrl}}"],
+              "path": ["cases", "{{caseId}}", "court-actions"]
+            },
+            "description": "`POST /cases/:caseId/court-actions` — `courtApi.createCourtAction` (JUDGE): actionType + actionDate required."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Court Actions (courtApi.getCourtActions)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/cases/{{caseId}}/court-actions",
+              "host": ["{{baseUrl}}"],
+              "path": ["cases", "{{caseId}}", "court-actions"]
+            },
+            "description": "`GET /cases/:caseId/court-actions` — `courtApi.getCourtActions` (court users)."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Bail — bail.api.ts",
+      "item": [
+        {
+          "name": "Create Bail Record (bailApi.createBailRecord)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"applicantName\": \"Advocate S. Rao\",\n  \"applicantRelation\": \"Counsel for accused\",\n  \"grounds\": \"Accused is resident of the city, no flight risk\",\n  \"accusedId\": \"{{accusedId}}\",\n  \"bailType\": \"POLICE\",\n  \"orderDocumentUrl\": \"\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/cases/{{caseId}}/bail-applications",
+              "host": ["{{baseUrl}}"],
+              "path": ["cases", "{{caseId}}", "bail-applications"]
+            },
+            "description": "`POST /cases/:caseId/bail-applications` — `bailApi.createBailRecord`. Route validators: applicantName, applicantRelation, grounds. Service: accusedId (must belong to case), bailType (POLICE | ANTICIPATORY | COURT), orderDocumentUrl."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Bail Records (bailApi.getBailRecords)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/cases/{{caseId}}/bail-applications",
+              "host": ["{{baseUrl}}"],
+              "path": ["cases", "{{caseId}}", "bail-applications"]
+            },
+            "description": "`GET /cases/:caseId/bail-applications` — `bailApi.getBailRecords`."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Audit Logs — timeline.api.ts",
+      "item": [
+        {
+          "name": "Get Audit Logs (timelineApi.getAuditLogs)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/cases/{{caseId}}/audit-logs",
+              "host": ["{{baseUrl}}"],
+              "path": ["cases", "{{caseId}}", "audit-logs"]
+            },
+            "description": "`GET /cases/:caseId/audit-logs` — `timelineApi.getAuditLogs` (client treats 403 as empty)."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Document Requests — documentRequests.api.ts",
+      "item": [
+        {
+          "name": "Create (documentRequestsApi.create)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"caseId\": \"{{caseId}}\",\n  \"documentType\": \"SEARCH_WARRANT\",\n  \"requestReason\": \"Needed to search secondary premises\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/document-requests",
+              "host": ["{{baseUrl}}"],
+              "path": ["document-requests"]
+            },
+            "description": "`POST /document-requests` — POLICE. documentType: ARREST_WARRANT | SEARCH_WARRANT | REMAND_ORDER | CHARGE_SHEET_COPY | OTHER. Saves `requestId`."
+          },
+          "response": []
+        },
+        {
+          "name": "My Requests (getMyRequests)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/document-requests/my",
+              "host": ["{{baseUrl}}"],
+              "path": ["document-requests", "my"]
+            },
+            "description": "`GET /document-requests/my` — POLICE."
+          },
+          "response": []
+        },
+        {
+          "name": "Pending (getPendingForSho — SHO)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/document-requests/pending",
+              "host": ["{{baseUrl}}"],
+              "path": ["document-requests", "pending"]
+            },
+            "description": "`GET /document-requests/pending` — SHO approval queue."
+          },
+          "response": []
+        },
+        {
+          "name": "Approve (approve — SHO)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/document-requests/{{requestId}}/approve",
+              "host": ["{{baseUrl}}"],
+              "path": ["document-requests", "{{requestId}}", "approve"]
+            },
+            "description": "`POST /document-requests/:id/approve` — SHO. No body."
+          },
+          "response": []
+        },
+        {
+          "name": "Reject (reject — SHO/Court)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reason\": \"Not applicable for this case\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/document-requests/{{requestId}}/reject",
+              "host": ["{{baseUrl}}"],
+              "path": ["document-requests", "{{requestId}}", "reject"]
+            },
+            "description": "`POST /document-requests/:id/reject` — SHO or Court: reason required."
+          },
+          "response": []
+        },
+        {
+          "name": "Approved (getApprovedForCourt)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/document-requests/approved",
+              "host": ["{{baseUrl}}"],
+              "path": ["document-requests", "approved"]
+            },
+            "description": "`GET /document-requests/approved` — court worklist of SHO-approved requests."
+          },
+          "response": []
+        },
+        {
+          "name": "By Case (getByCase)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/document-requests/case/{{caseId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["document-requests", "case", "{{caseId}}"]
+            },
+            "description": "`GET /document-requests/case/:caseId` — requests for one case."
+          },
+          "response": []
+        },
+        {
+          "name": "Issue (issue — Court, multipart)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "file", "type": "file", "src": [] },
+                { "key": "remarks", "value": "Issued with seal", "type": "text" }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/document-requests/{{requestId}}/issue",
+              "host": ["{{baseUrl}}"],
+              "path": ["document-requests", "{{requestId}}", "issue"]
+            },
+            "description": "`POST /document-requests/:id/issue` — court uploads the signed PDF: file required, remarks optional."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Timeline — timeline.api.ts",
+      "item": [
+        {
+          "name": "Get Case Timeline (timelineApi.getCaseTimeline)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/cases/{{caseId}}/timeline",
+              "host": ["{{baseUrl}}"],
+              "path": ["cases", "{{caseId}}", "timeline"]
+            },
+            "description": "`GET /cases/:caseId/timeline` — `timelineApi.getCaseTimeline`."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Search — search.api.ts",
+      "item": [
+        {
+          "name": "Global Search (searchApi.search)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/search?q=FIR&limit=20",
+              "host": ["{{baseUrl}}"],
+              "path": ["search"],
+              "query": [
+                { "key": "q", "value": "FIR" },
+                { "key": "limit", "value": "20" }
+              ]
+            },
+            "description": "`GET /search?q&limit` — `searchApi.search`. Client requires q length ≥ 2."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Closure Report — closureReport.api.ts",
+      "item": [
+        {
+          "name": "Generate (closureReportApi.generateClosureReport)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/cases/{{caseId}}/closure-report",
+              "host": ["{{baseUrl}}"],
+              "path": ["cases", "{{caseId}}", "closure-report"]
+            },
+            "description": "`POST /cases/:caseId/closure-report` — generates the PDF, returns { reportUrl }. No body."
+          },
+          "response": []
+        },
+        {
+          "name": "Get (closureReportApi.getClosureReport)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/cases/{{caseId}}/closure-report",
+              "host": ["{{baseUrl}}"],
+              "path": ["cases", "{{caseId}}", "closure-report"]
+            },
+            "description": "`GET /cases/:caseId/closure-report` — returns { reportUrl }."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Case Reopen — caseReopen.api.ts",
+      "item": [
+        {
+          "name": "Request Reopen (caseReopenApi.requestReopen)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"policeReason\": \"Fresh evidence located\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/cases/{{caseId}}/reopen-request",
+              "host": ["{{baseUrl}}"],
+              "path": ["cases", "{{caseId}}", "reopen-request"]
+            },
+            "description": "`POST /cases/:caseId/reopen-request` — `caseReopenApi.requestReopen` (POLICE): policeReason required. Saves `reopenId`."
+          },
+          "response": []
+        },
+        {
+          "name": "My Reopen Requests (getMyRequests)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/case-reopen/my-requests",
+              "host": ["{{baseUrl}}"],
+              "path": ["case-reopen", "my-requests"]
+            },
+            "description": "`GET /case-reopen/my-requests` — POLICE."
+          },
+          "response": []
+        },
+        {
+          "name": "Pending Reopen (getPendingForJudge — Judge)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/case-reopen/pending",
+              "host": ["{{baseUrl}}"],
+              "path": ["case-reopen", "pending"]
+            },
+            "description": "`GET /case-reopen/pending` — JUDGE queue."
+          },
+          "response": []
+        },
+        {
+          "name": "Approve Reopen (approve — Judge)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"judgeNote\": \"Reopen approved for fresh investigation\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/case-reopen/{{reopenId}}/approve",
+              "host": ["{{baseUrl}}"],
+              "path": ["case-reopen", "{{reopenId}}", "approve"]
+            },
+            "description": "`POST /case-reopen/:id/approve` — JUDGE: judgeNote required."
+          },
+          "response": []
+        },
+        {
+          "name": "Reject Reopen (reject — Judge)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reason\": \"Grounds insufficient\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/case-reopen/{{reopenId}}/reject",
+              "host": ["{{baseUrl}}"],
+              "path": ["case-reopen", "{{reopenId}}", "reject"]
+            },
+            "description": "`POST /case-reopen/:id/reject` — JUDGE: reason required."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "AI Features — ai.api.ts",
+      "item": [
+        {
+          "name": "Check Case Readiness (aiApi.checkCaseReadiness — SHO)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"caseId\": \"{{caseId}}\",\n  \"caseType\": \"THEFT\",\n  \"witnessCount\": 2,\n  \"evidenceCount\": 3,\n  \"timelineInfo\": { \"daysElapsed\": 30, \"expectedDays\": 90 }\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/ai/case-readiness",
+              "host": ["{{baseUrl}}"],
+              "path": ["ai", "case-readiness"]
+            },
+            "description": "`POST /ai/case-readiness` — `aiApi.checkCaseReadiness` (SHO). Server recomputes counts from the DB; extra fields ignored."
+          },
+          "response": []
+        },
+        {
+          "name": "Readiness History (getCaseReadinessHistory)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ai/case-readiness/{{caseId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["ai", "case-readiness", "{{caseId}}"]
+            },
+            "description": "`GET /ai/case-readiness/:caseId`."
+          },
+          "response": []
+        },
+        {
+          "name": "Validate Document (aiApi.validateDocument — Clerk)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"caseId\": \"{{caseId}}\",\n  \"documentType\": \"CHARGE_SHEET\",\n  \"documentName\": \"chargesheet.pdf\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/ai/document-validate",
+              "host": ["{{baseUrl}}"],
+              "path": ["ai", "document-validate"]
+            },
+            "description": "`POST /ai/document-validate` — `aiApi.validateDocument` (COURT_CLERK)."
+          },
+          "response": []
+        },
+        {
+          "name": "Validation History (getDocumentValidationHistory)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ai/document-validations/{{caseId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["ai", "document-validations", "{{caseId}}"]
+            },
+            "description": "`GET /ai/document-validations/:caseId`."
+          },
+          "response": []
+        },
+        {
+          "name": "Generate Case Brief (aiApi.generateCaseBrief — Judge)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"caseId\": \"{{caseId}}\",\n  \"caseNumber\": \"FIR/2026/0001\",\n  \"caseType\": \"THEFT\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/ai/case-brief",
+              "host": ["{{baseUrl}}"],
+              "path": ["ai", "case-brief"]
+            },
+            "description": "`POST /ai/case-brief` — `aiApi.generateCaseBrief` (JUDGE)."
+          },
+          "response": []
+        },
+        {
+          "name": "Case Brief History (getCaseBriefHistory)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ai/case-brief/{{caseId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["ai", "case-brief", "{{caseId}}"]
+            },
+            "description": "`GET /ai/case-brief/:caseId` — latest brief."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "AI Enhanced — aiEnhanced.api.ts",
+      "item": [
+        {
+          "name": "Legal NER",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"text\": \"Accused Vikram Singh committed theft at MG Road on 15 Jan 2026 (IPC 379)\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/ai/enhanced/legal-ner",
+              "host": ["{{baseUrl}}"],
+              "path": ["ai", "enhanced", "legal-ner"]
+            },
+            "description": "`POST /ai/enhanced/legal-ner` — `aiEnhancedApi.extractLegalEntities`: { text }."
+          },
+          "response": []
+        },
+        {
+          "name": "Suggest Sections",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"case_description\": \"Night burglary at a shop, cash and electronics stolen\",\n  \"top_k\": 5,\n  \"code_type\": \"both\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/ai/enhanced/suggest-sections",
+              "host": ["{{baseUrl}}"],
+              "path": ["ai", "enhanced", "suggest-sections"]
+            },
+            "description": "`POST /ai/enhanced/suggest-sections` — { case_description, top_k, code_type }."
+          },
+          "response": []
+        },
+        {
+          "name": "Find Precedents",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": \"night burglary of shop\",\n  \"top_k\": 5\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/ai/enhanced/find-precedents",
+              "host": ["{{baseUrl}}"],
+              "path": ["ai", "enhanced", "find-precedents"]
+            },
+            "description": "`POST /ai/enhanced/find-precedents` — { query, top_k, section? }."
+          },
+          "response": []
+        },
+        {
+          "name": "Suggest Keywords",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"text\": \"trespass and theft of goods from warehouse\",\n  \"max_items\": 8\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/ai/enhanced/suggest-keywords",
+              "host": ["{{baseUrl}}"],
+              "path": ["ai", "enhanced", "suggest-keywords"]
+            },
+            "description": "`POST /ai/enhanced/suggest-keywords` — { text, max_items }."
+          },
+          "response": []
+        },
+        {
+          "name": "Generate Document",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"document_type\": \"CHARGE_SHEET\",\n  \"case_data\": { \"firNumber\": \"FIR/2026/0001\", \"accused\": \"Vikram Singh\" }\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/ai/enhanced/generate-document",
+              "host": ["{{baseUrl}}"],
+              "path": ["ai", "enhanced", "generate-document"]
+            },
+            "description": "`POST /ai/enhanced/generate-document` — { document_type, case_data }."
+          },
+          "response": []
+        },
+        {
+          "name": "Multilingual OCR (multipart)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "file", "type": "file", "src": [] },
+                { "key": "language", "value": "hi", "type": "text" },
+                { "key": "auto_detect", "value": "true", "type": "text" }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/ai/enhanced/multilingual-ocr",
+              "host": ["{{baseUrl}}"],
+              "path": ["ai", "enhanced", "multilingual-ocr"]
+            },
+            "description": "`POST /ai/enhanced/multilingual-ocr` — multipart: file (+ language, auto_detect)."
+          },
+          "response": []
+        },
+        {
+          "name": "Advanced Search",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": \"criminal breach of trust\",\n  \"top_k\": 5,\n  \"use_reranking\": false\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/ai/enhanced/advanced-search",
+              "host": ["{{baseUrl}}"],
+              "path": ["ai", "enhanced", "advanced-search"]
+            },
+            "description": "`POST /ai/enhanced/advanced-search` — { query, top_k, use_reranking }."
+          },
+          "response": []
+        },
+        {
+          "name": "AI Stats",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ai/enhanced/stats",
+              "host": ["{{baseUrl}}"],
+              "path": ["ai", "enhanced", "stats"]
+            },
+            "description": "`GET /ai/enhanced/stats`."
+          },
+          "response": []
+        },
+        {
+          "name": "AI Templates",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ai/enhanced/templates",
+              "host": ["{{baseUrl}}"],
+              "path": ["ai", "enhanced", "templates"]
+            },
+            "description": "`GET /ai/enhanced/templates`."
+          },
+          "response": []
+        },
+        {
+          "name": "Section Details",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ai/enhanced/section-details/1?code_type=ipc",
+              "host": ["{{baseUrl}}"],
+              "path": ["ai", "enhanced", "section-details", "1"],
+              "query": [{ "key": "code_type", "value": "ipc" }]
+            },
+            "description": "`GET /ai/enhanced/section-details/:id?code_type` — replace `1` with a real section id."
+          },
+          "response": []
+        },
+        {
+          "name": "Precedents By Section",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ai/enhanced/precedents/section/IPC 379?top_k=5",
+              "host": ["{{baseUrl}}"],
+              "path": ["ai", "enhanced", "precedents", "section", "IPC 379"],
+              "query": [{ "key": "top_k", "value": "5" }]
+            },
+            "description": "`GET /ai/enhanced/precedents/section/:section?top_k` — URL-encode the section (IPC%20379)."
+          },
+          "response": []
+        },
+        {
+          "name": "Sections List",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ai/enhanced/sections-list?code_type=both",
+              "host": ["{{baseUrl}}"],
+              "path": ["ai", "enhanced", "sections-list"],
+              "query": [{ "key": "code_type", "value": "both" }]
+            },
+            "description": "`GET /ai/enhanced/sections-list?code_type`."
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:5000/api" },
+    { "key": "token", "value": "" },
+    { "key": "caseId", "value": "" },
+    { "key": "firId", "value": "" },
+    { "key": "documentId", "value": "" },
+    { "key": "accusedId", "value": "" },
+    { "key": "stationId", "value": "" },
+    { "key": "courtId", "value": "" },
+    { "key": "requestId", "value": "" },
+    { "key": "reopenId", "value": "" },
+    { "key": "officerId", "value": "" },
+    { "key": "userId", "value": "" }
+  ]
+}
