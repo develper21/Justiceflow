@@ -99,24 +99,28 @@ We commit to:
 We classify vulnerabilities using these levels:
 
 #### Critical (CVSS 9.0-10.0)
+
 - Remote code execution
 - SQL injection allowing data exfiltration
 - Authentication bypass affecting all users
 - **Response time**: Immediate patch within 24-48 hours
 
 #### High (CVSS 7.0-8.9)
+
 - Privilege escalation across organizations
 - Unauthorized access to case data
 - XSS allowing session hijacking
 - **Response time**: Patch within 1 week
 
 #### Medium (CVSS 4.0-6.9)
+
 - CSRF vulnerabilities
 - Information disclosure
 - Denial of service (limited scope)
 - **Response time**: Patch within 2 weeks
 
 #### Low (CVSS 0.1-3.9)
+
 - Minor information leaks
 - Issues requiring physical access
 - Theoretical vulnerabilities
