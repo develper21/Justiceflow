@@ -30,7 +30,7 @@ const ChatbotWidget: React.FC<{ onClose: () => void }> = ({ onClose }) => {
       const answer = res.data?.answer || res.data?.data?.answer || 'Sorry, I could not find an answer.';
       const sources = res.data?.sources || [];
       setMessages((msgs) => [...msgs, { sender: 'bot', text: answer, sources }]);
-    } catch (e) {
+    } catch {
       setMessages((msgs) => [...msgs, { sender: 'bot', text: 'Sorry, there was an error contacting the AI service.' }]);
     } finally {
       setLoading(false);
