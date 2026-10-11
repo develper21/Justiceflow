@@ -27,7 +27,7 @@ export const ClosureReportButton: React.FC<ClosureReportButtonProps> = ({
     try {
       const url = await closureReportApi.getClosureReport(caseId);
       setReportUrl(url);
-    } catch (e) {
+    } catch {
       // Report might not exist yet
       setReportUrl(null);
     } finally {
