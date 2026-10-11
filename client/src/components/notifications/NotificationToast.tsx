@@ -95,10 +95,11 @@ export const NotificationToast: React.FC<NotificationToastProps> = ({
 
     // Cleanup on unmount
     useEffect(() => {
+        const currentNotifications = shownNotificationsRef.current;
         return () => {
-            shownNotificationsRef.current.clear();
+            currentNotifications.clear();
         };
-    }, []);
+    }, [showNotification]);
 
     return null; // This component doesn't render anything
 };
