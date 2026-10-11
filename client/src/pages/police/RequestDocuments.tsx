@@ -36,8 +36,8 @@ export const RequestDocuments: React.FC = () => {
       // If caseId is present in query param, pre-select it
       const q = searchParams.get('caseId');
       if (q) setCaseId(q);
-    } catch (err) {
-      // ignore for now
+    } catch (error) {
+      console.error('Failed to load cases for document requests:', error);
     }
   };
 
@@ -53,8 +53,8 @@ export const RequestDocuments: React.FC = () => {
       await loadMyRequests();
       setCaseId('');
       setReason('');
-    } catch (err) {
-      // TODO: toast error
+    } catch (error) {
+      console.error('Failed to submit document request:', error);
     } finally {
       setLoading(false);
     }
