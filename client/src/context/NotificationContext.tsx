@@ -24,7 +24,7 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ 
     try {
       const raw = localStorage.getItem(LOCAL_KEY);
       return raw ? JSON.parse(raw) : {};
-    } catch (e) {
+    } catch {
       return {};
     }
   });
@@ -32,7 +32,11 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ 
 
   const saveReadMap = (m: Record<string, boolean>) => {
     setReadMap(m);
-    try { localStorage.setItem(LOCAL_KEY, JSON.stringify(m)); } catch (e) { }
+    try {
+      localStorage.setItem(LOCAL_KEY, JSON.stringify(m));
+    } catch (error) {
+      console.warn('Failed to save notification read state:', error);
+    }
   };
 
   const mapAuditToNotification = (log: AuditLog, caseId: string): Notification | null => {
@@ -73,8 +77,8 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ 
           const n = mapAuditToNotification(l, caseId);
           if (n) items.push(n);
         });
-      } catch (e) {
-        // ignore fetch errors per-case
+      } catch (error) {
+        console.warn(`Failed to load audit notifications for case ${caseId}:`, error);
       }
     }));
 
@@ -114,22 +118,20 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ 
   };
 
   useEffect(() => {
-    refresh();
-    const iv = setInterval(() => { refresh(); }, 30 * 1000); // 30s poll
+    const initialRefresh = window.setTimeout(() => {
+      void refresh();
+    }, 0);
+    const iv = setInterval(() => { void refresh(); }, 30 * 1000);
 
-    const onFocus = () => refresh();
+    const onFocus = () => { void refresh(); };
     window.addEventListener('focus', onFocus);
 
     return () => {
+      clearTimeout(initialRefresh);
       clearInterval(iv);
       window.removeEventListener('focus', onFocus);
     };
   }, [user]);
-
-  useEffect(() => {
-    // Update isRead flags on notifications when readMap changes
-    setNotifications((prev) => prev.map(n => ({ ...n, isRead: !!readMap[n.id] })));
-  }, [readMap]);
 
   const markAsRead = (id: string) => {
     const nm = { ...readMap, [id]: true };
@@ -142,10 +144,14 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ 
     saveReadMap(m);
   };
 
-  const unreadCount = notifications.filter(n => !n.isRead).length;
+  const notificationsWithReadState = notifications.map((notification) => ({
+    ...notification,
+    isRead: !!readMap[notification.id],
+  }));
+  const unreadCount = notificationsWithReadState.filter(n => !n.isRead).length;
 
   return (
-    <NotificationContext.Provider value={{ notifications, unreadCount, markAsRead, markAllRead, refresh }}>
+    <NotificationContext.Provider value={{ notifications: notificationsWithReadState, unreadCount, markAsRead, markAllRead, refresh }}>
       {children}
     </NotificationContext.Provider>
   );
@@ -156,5 +162,3 @@ export const useNotifications = () => {
   if (!ctx) throw new Error('useNotifications must be used within NotificationProvider');
   return ctx;
 };
-
-export default NotificationContext;
