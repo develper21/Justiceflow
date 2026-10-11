@@ -53,8 +53,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     } catch (err: unknown) {
       toast.error(getErrorMessage(err) || 'Login failed');
       throw err;
-    };
-  }
+    }
+  };
 
   const logout = () => {
     authApi.logout();
