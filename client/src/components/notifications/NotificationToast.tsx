@@ -99,7 +99,7 @@ export const NotificationToast: React.FC<NotificationToastProps> = ({
         return () => {
             currentNotifications.clear();
         };
-    }, [showNotification]);
+    }, []);
 
     return null; // This component doesn't render anything
 };
