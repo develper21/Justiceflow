@@ -1,5 +1,4 @@
-import type ReactNode from 'react';
-import React, { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
 import { authApi } from '../api';
 import type { User } from '../types/api.types';
 import toast from 'react-hot-toast';
@@ -19,10 +18,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   // Check authentication on app load
-  useEffect(() => {
-    checkAuth();
-  }, []);
-
   const checkAuth = async () => {
     const token = localStorage.getItem('token');
 
@@ -39,6 +34,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setIsLoading(false);
   };
 
+  useEffect(() => {
+    const authCheck = window.setTimeout(() => {
+      void checkAuth();
+    }, 0);
+    return () => clearTimeout(authCheck);
+  }, []);
+
   const login = async (email: string, password: string) => {
     try {
       const response = await authApi.login({ email, password });
@@ -51,30 +53,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     } catch (err: unknown) {
       toast.error(getErrorMessage(err) || 'Login failed');
       throw err;
-    }
+    };
   }
-
-  const logout = () => {
-    authApi.logout();
-    setUser(null);
-    toast.success('Logged out successfully');
-  };
-
-  return (
-    <AuthContext.Provider
-      value={{
-        user,
-        isAuthenticated: !!user,
-        isLoading,
-        login,
-        logout,
-      }}
-    >
-      {children}
-    </AuthContext.Provider>
-  );
-}
-
 
   const logout = () => {
     authApi.logout();
@@ -109,4 +89,3 @@ function getErrorMessage(err: unknown): string | undefined {
   if (!err || typeof err !== 'object') return undefined;
   return (err as { response?: { data?: { message?: string } } }).response?.data?.message;
 }
-
