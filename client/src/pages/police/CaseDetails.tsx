@@ -231,8 +231,8 @@ export const PoliceCaseDetails: React.FC = () => {
     try {
       const res = await documentRequestsApi.getByCase(id!);
       setCaseRequests(res);
-    } catch (_err) {
-      // Ignore silently - show empty list
+    } catch (error) {
+      console.warn('Failed to load case document requests:', error);
     } finally {
       setRequestsLoading(false);
     }
@@ -248,8 +248,8 @@ export const PoliceCaseDetails: React.FC = () => {
     try {
       const res = await (await import('../../api/caseReopen.api')).caseReopenApi.getMyRequests();
       setMyReopenRequests(res.filter((r: any) => r.caseId === id));
-    } catch (_err) {
-      // ignore
+    } catch (error) {
+      console.warn('Failed to load case re-open requests:', error);
     }
   };
 
