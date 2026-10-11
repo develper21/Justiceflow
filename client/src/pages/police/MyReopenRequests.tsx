@@ -14,8 +14,8 @@ export const MyReopenRequests: React.FC = () => {
     try {
       const res = await caseReopenApi.getMyRequests();
       setRequests(res);
-    } catch (err) {
-      // ignore
+    } catch (error) {
+      console.error('Failed to load re-open requests:', error);
     } finally {
       setLoading(false);
     }
