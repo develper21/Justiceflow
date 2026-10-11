@@ -1,2 +1,3 @@
 export { NotificationToast } from './NotificationToast';
-export { CustomToast, showNotificationToast } from './CustomToast';
+export { CustomToast } from './CustomToast';
+export { showNotificationToast } from './showNotificationToast';
